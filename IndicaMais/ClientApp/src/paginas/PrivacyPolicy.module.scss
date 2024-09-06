@@ -1,0 +1,22 @@
+﻿@import '../_colors.scss';
+
+div.politica{
+    padding: 15px 20px;
+    text-align: justify;
+    color: $corFonte;
+    font-size: 17px;
+    background: $corPrimaria;
+}
+
+div.politica h1, div.politica h2, div.politica h3 {
+    text-decoration: underline;
+    margin-bottom: 15px;
+}
+
+div.politica a {
+    color: $corFonte !important;
+}
+
+div.politica .logolmr > * {
+    fill: $corFonte;
+}

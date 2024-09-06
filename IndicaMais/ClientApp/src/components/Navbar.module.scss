@@ -1,0 +1,45 @@
+﻿@import '../_colors.scss';
+
+div.navbar {
+    background: $corPrimaria;
+    color: $corFonte;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+    position: fixed;
+    width: 100%;
+}
+
+div.navbar h1{
+    margin-bottom: 0;
+}
+
+div.navbar div.logo{
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px;
+    cursor: pointer;
+}
+
+div.navbar div.links{
+    display: flex;
+    gap: 22px;
+    align-items: center;
+}
+
+div.navbar a{
+    margin: 0;
+    cursor: pointer;
+    color: $corFonte;
+    text-decoration: none;
+}
+
+.logolmr {
+    width: 90px;
+    height: 60px;
+}
+
+.logolmr > *{
+    fill: $corFonte;
+}

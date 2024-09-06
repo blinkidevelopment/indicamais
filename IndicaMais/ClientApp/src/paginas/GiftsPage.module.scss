@@ -1,0 +1,23 @@
+﻿@import '../_colors.scss';
+
+.bodybg {
+    background: $corFundo;
+}
+
+h1.titulo {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    color: $corFonteSecundaria;
+    padding: 25px 0 20px;
+}
+
+div.container{
+    padding-top: 72px;
+}
+
+div.containeritens {
+    padding: 0 20px 20px 20px;
+    display: grid;
+    gap: 13px;
+}

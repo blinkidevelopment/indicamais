@@ -1,0 +1,46 @@
+﻿@import '../_colors.scss';
+
+.bodybg {
+    background: $corFundo;
+}
+
+h1.titulo {
+    margin-top: 10px;
+    text-align: center;
+    color: $corFonteSecundaria;
+    padding: 25px 0 20px;
+}
+
+div.container {
+    padding-top: 72px;
+}
+
+div.configuracoes {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+div.configuracao {
+    background: $corTerciaria;
+    text-align: center;
+    border-radius: 20px;
+    width: 24%;
+    padding: 20px;
+    color: $corFonte;
+}
+
+div.configuracao input{
+    border: 0;
+    background: none;
+    color: $corFonte;
+    border-bottom: 1px solid $corFonte;
+}
+
+div.configuracao button{
+    border: 0;
+    margin-left: 5px;
+}

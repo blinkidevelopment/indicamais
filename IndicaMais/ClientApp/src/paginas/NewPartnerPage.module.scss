@@ -1,0 +1,87 @@
+﻿@import '../_colors.scss';
+
+.bodybg {
+    background: $corFundo;
+}
+
+.enviado {
+    width: 40px !important;
+    border-radius: 21px !important;
+    transition: 1s;
+}
+
+.enviando {
+    width: 26px;
+    height: 26px;
+}
+
+.enviando > * {
+    fill: $corFonte;
+}
+
+.valido {
+    color: $corTerciaria;
+}
+
+.invalido {
+    color: $corFonteSecundaria;
+}
+
+div.container {
+    padding-top: 72px;
+}
+
+div.container h1 {
+    text-align: center;
+    padding: 25px 0 20px;
+    color: $corFonteSecundaria;
+}
+
+div.cardcadastro {
+    background: #afafaf99;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 20px;
+    border: 1px solid $corFonte;
+    display: grid;
+    gap: 10px;
+}
+
+div.cardcadastro button {
+    width: 100%;
+    border-radius: 13px;
+    height: 40px;
+    color: $corFonte;
+    border: 0;
+    background: $corTerciaria;
+    transition: 1s;
+}
+
+div.campo{
+    margin: 0 22px;
+}
+
+div.campo input, div.campo select{
+    border: 0;
+    width: 100%;
+    height: 40px;
+    padding: 0 5px;
+}
+
+div.campo p.exibirsenha{
+    margin-bottom: 5px;
+    color: $corFonte;
+    position: absolute;
+    cursor: pointer;
+}
+
+div.requisitos{
+    margin-top: 5px;
+    display: grid;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+div.requisitos p{
+    margin-bottom: 0;
+}

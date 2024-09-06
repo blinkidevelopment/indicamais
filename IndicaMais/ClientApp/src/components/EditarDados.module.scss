@@ -1,0 +1,113 @@
+﻿@import '../_colors.scss';
+
+body {
+    background: $corPrimaria;
+}
+
+div.dados {
+    padding-top: 35px;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+}
+
+div.dados h1{
+    color: $corFonte;
+}
+
+div.formulario {
+    display: grid;
+    background: #ffffff1a;
+    border-radius: 20px;
+    border: 1px solid $corFonte;
+    margin: 0 20px;
+    margin-top: 20px;
+}
+
+div.formulario button{
+    width: 166px;
+    border-radius: 13px;
+    height: 40px;
+    border: 0;
+    background: $corFundo;
+    transition: 1s;
+    color: $corFonteSecundaria;
+}
+
+div.campo {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-bottom: 1px solid $corFonte;
+    margin: 0 22px;
+    gap: 10px;
+    flex-direction: row-reverse;
+    margin-bottom: 10px;
+}
+
+div.campo input{
+    height: 35px;
+    border: 0;
+    margin-bottom: 0;
+    margin-top: 22px;
+    width: 100%;
+    padding: 5px;
+    color: $corFonte;
+    background: none;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+}
+
+div.campo input::placeholder{
+    color: $corFundo;
+}
+
+div.botoes{
+    display: grid;
+    justify-items: center;
+    padding: 20px 0;
+    gap: 10px;
+}
+
+p.editardado {
+    margin-bottom: 5px;
+    color: $corFonte;
+    position: absolute;
+    cursor: pointer;
+}
+
+p.editardado + p{
+    margin-right: 23px;
+}
+
+button.salvardados {
+    background: #0074b8 !important;
+    color: white !important;
+}
+
+button.excluir {
+    background: #d80115 !important;
+    color: white !important;
+}
+
+.mensagem {
+    text-align: center;
+    color: $corFonte;
+    margin-bottom: 0;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+div.requisitos {
+    color: $corFonte;
+    padding: 15px 10px;
+}
+
+div.requisitos p{
+    margin-bottom: 0;
+}
+
+div.requisitos h5 + p, div.requisitos p + p{
+    margin-top: 14px;
+}

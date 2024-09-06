@@ -1,0 +1,113 @@
+﻿@import '../_colors.scss';
+
+.aberto {
+    margin-top: -4px;
+    transform: rotate(180deg);
+}
+
+.desabilitado{
+    cursor: unset !important;
+    opacity: 40%;
+}
+
+div.indicacoes {
+    padding: 30px 20px;
+    background: $corSecundaria;
+    border-radius: 15px;
+    margin: 0 10px 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+div.indicacoes p {
+    color: $corFonteSecundaria;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 0;
+    width: fit-content;
+    cursor: pointer;
+    margin-top: -8px;
+}
+
+div.indicacoes .colapsar{
+    width: 20px;
+    height: 20px;
+    margin-top: -2px;
+    transition: 0.5s ease;
+}
+
+div.indicacoes .colapsar > * {
+    fill: $corFonteSecundaria;
+}
+
+div.indicacoes img.icone {
+    position: absolute;
+    top: 50%;
+    right: 67px;
+    transform: translate(55%, -47%) rotate(-7deg);
+    width: 33%;
+    max-width: 132px;
+    opacity: 65%;
+}
+
+div.indicacoes table{
+    border: 1px solid $corFonteSecundaria;
+    width: 100%;
+    margin-top: 10px;
+    margin-right: 20px;
+    color: $corFonteSecundaria;
+}
+
+div.indicacoes table td, div.indicacoes table th{
+    padding: 5px;
+}
+
+div.indicacoes table td img{
+    width: 17px;
+}
+
+div.indicacoes table thead {
+    color: $corFonteSecundaria;
+    border: 1px solid $corFonteSecundaria;
+}
+
+div.indicacoes table tfoot{
+    font-weight: bold;
+}
+
+div.controles {
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-between;
+}
+
+div.controles div{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+div.controles p{
+    cursor: unset;
+}
+
+div.controles svg {
+    position: unset;
+    transform: none;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+div.controles svg > * {
+    fill: $corFonteSecundaria;
+}
+
+div.carregando {
+    display: flex;
+    justify-content: center;
+}
+
+div.carregando img {
+    width: 50px;
+}

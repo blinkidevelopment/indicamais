@@ -1,0 +1,134 @@
+﻿@import '../_colors.scss';
+
+.bodybg {
+    background: $corFundo;
+}
+
+div.cabecalho {
+    background: $corSecundaria;
+    padding: 20px;
+}
+
+div.cabecalho div.menuconta{
+    display: flex;
+    gap: 10px;
+}
+
+div.cabecalho div.menuconta .blocoacao{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    color: $corFonteSecundaria;
+}
+
+div.cabecalho div.menuconta .blocoacao p{
+    cursor: pointer;
+}
+
+div.cabecalho div.menuconta .acao{
+    width: 28px;
+}
+
+div.cabecalho .conta{
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+div.cabecalho .conta > * {
+    fill: $corFonteSecundaria;
+}
+
+div.cabecalho h1{
+    font-size: 28px;
+    font-weight: normal;
+    color: $corFonteSecundaria;
+}
+
+div.saldo {
+    background: $corTerciaria;
+    padding: 32px 20px;
+    color: $corFonte;
+}
+
+div.saldo p.exibir{
+    font-size: 24px;
+    cursor: pointer;
+}
+
+div.saldo h1{
+    font-size: 17px;
+}
+
+div.saldo div{
+    margin-top: 8px;
+    margin-bottom: 10px;
+}
+
+div.saldo div.exibir{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.saldo div.exibir h1{
+    margin-bottom: 0;
+}
+
+div.saldo div p{
+    font-weight: bold;
+    font-size: 2.5em;
+    margin-bottom: -10px;
+}
+
+div.saldo .atualizarcredito{
+    font-size: 24px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+div.servicos {
+    background: $corFundo;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px 0;
+}
+
+div.servicos div.servico{
+    border-radius: 50px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+div.servicos div#indicar{
+    background: $corPrimaria;
+}
+
+div.servicos div#resgatar{
+    background: $corTerciaria;
+}
+
+div.servicos div#abater{
+    background: $corSecundaria;
+}
+
+div.servicos .icone{
+    width: 50px;
+    height: 50px;
+}
+
+div.servicos .icone > *{
+    fill: $corFonte;
+}
+
+div.servicos div {
+    font-weight: bold;
+    text-align: center;
+}
+
+div.servicos div p{
+    margin-bottom: 0;
+    color: $corFonteSecundaria;
+}
