@@ -44,3 +44,79 @@ div.configuracao button{
     border: 0;
     margin-left: 5px;
 }
+
+div.empresa {
+    display: flex;
+    gap: 20%;
+    padding: 0 30px;
+}
+
+div.dadosempresa input[type=text] {
+    height: 32px;
+    border: 0;
+    width: 230px;
+    border-radius: 20px;
+    padding: 0 5px;
+}
+
+div.logoempresa {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+img.logo {
+    width: 100%;
+    max-width: 200px;
+}
+
+div.cores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+div.cores div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex: 1 1 calc(33.333% - 20px);
+    box-sizing: border-box;
+}
+
+input[type=color] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+input[type=color]::-webkit-color-swatch {
+    border-radius: 5px;
+    border: 1px solid $corFonteSecundaria;
+}
+
+input[type=color]::-moz-color-swatch {
+    border-radius: 5px;
+    border: 1px solid $corFonteSecundaria;
+}
+
+div.botaosalvar {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+div.botaosalvar button {
+    border: 0;
+    background: $corFonte;
+    color: $corFonteSecundaria;
+    border-radius: 15px;
+    height: 40px;
+    padding: 0 15px;
+}

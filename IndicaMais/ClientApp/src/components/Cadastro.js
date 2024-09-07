@@ -6,12 +6,13 @@ import Utils from "../classes/Utils";
 import InputMask from "react-input-mask";
 import { faCircleCheck, faCircleXmark, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTenant } from '../TenantContext';
 
 function Cadastro() {
     const recursos = new Recursos();
     const fetch = new Fetch();
     const utils = new Utils();
-    const LMRLogo = recursos.getLMRLogo();
+    const tenant = useTenant();
     const EnviandoIcone = recursos.getEnviando();
 
     const [statusCadastro, setStatusCadastro] = useState({
@@ -32,6 +33,7 @@ function Cadastro() {
         minCaract: false,
         confirmacao: null
     });
+    const [logo, setLogo] = useState(null);
 
     useEffect(() => {
         if (senha) {
@@ -58,6 +60,11 @@ function Cadastro() {
         setCpf(cpf);
         ocultar();
     };
+
+    useEffect(() => {
+        const logoBase64 = `data:${tenant.logoMimeType};base64,${tenant.logo}`;
+        setLogo(logoBase64);
+    }, [tenant]);
 
     function ocultar() {
         setStatusCadastro({ ...statusCadastro, exibirCamposSeguintes: false });
@@ -204,7 +211,7 @@ function Cadastro() {
     return (
         <div className={style.cadastro}>
             <div className={style.cadastrocard}>
-                <LMRLogo className={style.logolmr} />
+                <img src={logo} alt="Logo da Empresa" className={style.logo} />
                 <div className={style.formulario}>
                     <h1>Cadastro</h1>
                     {statusCadastro.exibir ?

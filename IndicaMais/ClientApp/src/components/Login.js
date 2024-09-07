@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import Recursos from "../classes/Recursos";
 import style from "./Login.module.scss";
 import Fetch from "../classes/Fetch";
@@ -11,13 +11,13 @@ function Login() {
     const recursos = new Recursos();
     const fetch = new Fetch();
     const tenant = useTenant();
-    const LMRLogo = recursos.getLMRLogo();
     const EnviandoIcone = recursos.getEnviando();
 
     const [mensagem, setMensagem] = useState(null);
     const [enviado, setEnviado] = useState(null);
     const [cpf, setCpf] = useState('');
     const [exibirSenha, setExibirSenha] = useState(false);
+    const [logo, setLogo] = useState(null);
 
     function enviar(e) {
         if (e.keyCode === 13) {
@@ -46,10 +46,15 @@ function Login() {
         }
     }
 
+    useEffect(() => {
+        const logoBase64 = `data:${tenant.logoMimeType};base64,${tenant.logo}`;
+        setLogo(logoBase64);
+    }, [tenant]);
+
     return (
         <div className={style.login}>
             <div className={style.logincard}>
-                <LMRLogo className={style.logolmr} />
+                <img src={logo} alt="Logo da Empresa" className={style.logo} />
                 <div className={style.formulario}>
                     <h1>Login</h1>
                     <form autoComplete="on">

@@ -794,6 +794,31 @@
 
         return resposta;
     }
+
+    async editarEmpresa(nome, logo, corPrimaria, corSecundaria, corTerciaria, corFundo, corFonte, corFonteSecundaria) {
+        var resposta;
+
+        var formData = new FormData();
+
+        formData.append("nome", nome);
+        formData.append("corPrimaria", corPrimaria);
+        formData.append("corSecundaria", corSecundaria);
+        formData.append("corTerciaria", corTerciaria);
+        formData.append("corFundo", corFundo);
+        formData.append("corFonte", corFonte);
+        formData.append("corFonteSecundaria", corFonteSecundaria);
+
+        if (logo) {
+            formData.append("logo", logo);
+        }
+
+        await fetch('api/empresa', {
+            method: 'PATCH',
+            body: formData
+        }).then((response) => response.json()).then((data) => { resposta = data });
+
+        return resposta;
+    }
 }
 
 export default Fetch;

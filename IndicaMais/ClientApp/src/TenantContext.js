@@ -3,15 +3,12 @@ import Fetch from './classes/Fetch';
 
 const fetch = new Fetch();
 
-// Criação do contexto
 const TenantContext = createContext();
 
-// Hook para usar o contexto do Tenant
 export const useTenant = () => {
     return useContext(TenantContext);
 };
 
-// Provedor do contexto
 export const TenantProvider = ({ children }) => {
     const [tenant, setTenant] = useState('');
 
@@ -19,13 +16,13 @@ export const TenantProvider = ({ children }) => {
         const buscarDados = async () => {
             var dados = await fetch.buscarEmpresa();
             setTenant(dados);
+
+            if (dados != null) {
+                document.title = dados.nomeApp;
+            }
         }
 
         buscarDados();
-        /*fetch('api/empresa')
-            .then(response => response.json())
-            .then(data => setTenant(data))
-            .catch(error => console.error('Error fetching tenant name:', error));*/
     }, []);
 
     const root = document.documentElement;
@@ -37,7 +34,7 @@ export const TenantProvider = ({ children }) => {
     root.style.setProperty('--corFonte', tenant.corFonte);
     root.style.setProperty('--corFonteSecundaria', tenant.corFonteSecundaria);
 
-    //tratar o que deve ser feito caso o tenant não exista
+    //TODO: Tratar o que deve ser feito caso o tenant não exista
     return (
         <TenantContext.Provider value={tenant}>
             {tenant !== '' ? children : ''}

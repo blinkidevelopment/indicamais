@@ -8,7 +8,9 @@ namespace IndicaMais.Models
         public int Id { get; set; }
         [StringLength(255)]
         public string Nome { get; set; }
+        public string NomeApp { get; set; }
         public byte[]? Logo { get; set; }
+        public string LogoMimeType { get; set; }
         [StringLength(7)]
         public string CorPrimaria { get; set; }
         [StringLength(7)]

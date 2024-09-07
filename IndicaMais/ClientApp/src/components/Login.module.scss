@@ -25,8 +25,9 @@ div.login div.campo p.exibirsenha {
     cursor: pointer;
 }
 
-.logolmr > * {
-    fill: $corFonte;
+img.logo{
+    width: 100%;
+    max-width: 200px;
 }
 
 .logincard {
