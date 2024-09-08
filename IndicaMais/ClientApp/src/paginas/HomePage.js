@@ -52,7 +52,7 @@ function HomePage() {
 
     useEffect(() => {
         const buscarDados = async () => {
-            var dados = await fetch.buscarUsuario();
+            var dados = await fetch.buscarParceiro();
             setUsuario(dados);
 
             if (dados.tipo === 1) {

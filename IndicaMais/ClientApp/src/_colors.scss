@@ -1,10 +1,10 @@
 :root {
-  --corPrimaria: red;
-  --corSecundaria: red;
-  --corTerciaria: red;
-  --corFundo: red;
-  --corFonte: white;
-  --corFonteSecundaria: black;
+    --corPrimaria: #ffffff;
+    --corSecundaria: #ffffff;
+    --corTerciaria: #ffffff;
+    --corFundo: #ffffff;
+    --corFonte: black;
+    --corFonteSecundaria: black;
 }
 
 $corPrimaria: var(--corPrimaria);

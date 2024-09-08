@@ -31,7 +31,7 @@ namespace IndicaMais.DbContexts
             builder.Entity<Parceiro>().HasIndex("Telefone", "TenantId").IsUnique(true);
 
             builder.Entity<Usuario>().HasQueryFilter(u => u.Tenant.Id == CurrentTenantId).HasIndex("Email", "TenantId").IsUnique(true);
-            builder.Entity<Empresa>().HasQueryFilter(a => a.Tenant.Id == CurrentTenantId);
+            builder.Entity<Empresa>().HasQueryFilter(a => a.Tenant.Id == CurrentTenantId).HasIndex("TenantId").IsUnique(true);
             builder.Entity<Premio>().HasQueryFilter(a => a.Tenant.Id == CurrentTenantId);
             builder.Entity<Indicacao>().HasQueryFilter(a => a.Tenant.Id == CurrentTenantId).HasIndex("IndicadoId").IsUnique(true);
             builder.Entity<Transacao>().HasQueryFilter(a => a.Tenant.Id == CurrentTenantId);
@@ -44,6 +44,11 @@ namespace IndicaMais.DbContexts
         {
             foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().ToList())
             {
+                if (entry.Entity is Empresa && entry.State == EntityState.Added)
+                {
+                    continue;
+                }
+
                 switch (entry.State)
                 {
                     case EntityState.Added:
@@ -60,6 +65,11 @@ namespace IndicaMais.DbContexts
         {
             foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().ToList())
             {
+                if (entry.Entity is Empresa && entry.State == EntityState.Added)
+                {
+                    continue;
+                }
+
                 switch (entry.State)
                 {
                     case EntityState.Added:

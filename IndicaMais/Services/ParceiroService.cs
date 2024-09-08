@@ -13,18 +13,16 @@ namespace IndicaMais.Services
         private readonly ApplicationDbContext _context;
         private readonly UserManager<Usuario> _userManager;
         private readonly SignInManager<Usuario> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ICurrentTenantService _currentTenantService;
         private readonly AsaasService _asaas;
         private readonly ViosService _vios;
         public string CurrentTenantId { get; set; }
 
-        public ParceiroService(ApplicationDbContext context, UserManager<Usuario> userManager, SignInManager<Usuario> signInManager, RoleManager<IdentityRole> roleManager, ICurrentTenantService currentTenantService, AsaasService asaas, ViosService vios)
+        public ParceiroService(ApplicationDbContext context, UserManager<Usuario> userManager, SignInManager<Usuario> signInManager, ICurrentTenantService currentTenantService, AsaasService asaas, ViosService vios)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
-            _roleManager = roleManager;
             _currentTenantService = currentTenantService;
             CurrentTenantId = _currentTenantService.TenantId;
             _asaas = asaas;

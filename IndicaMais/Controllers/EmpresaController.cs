@@ -34,7 +34,7 @@ namespace IndicaMais.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpGet("configuracoes")]
         public async Task<IActionResult> ListarConfiguracoes()
         {

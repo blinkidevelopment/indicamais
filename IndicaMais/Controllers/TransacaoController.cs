@@ -24,7 +24,7 @@ namespace IndicaMais.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpGet("listar")]
         public async Task<IActionResult> Listar([FromQuery] int pagina, int tamanho, int? tipo, bool? baixa, string? nome, string? cpf)
         {
@@ -32,7 +32,7 @@ namespace IndicaMais.Controllers
             return Ok(new { result.transacoes, result.temMais });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpPatch("{id}/mudar-status")]
         public async Task<IActionResult> MudarStatus(int id)
         {

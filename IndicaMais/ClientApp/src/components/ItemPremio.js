@@ -120,7 +120,7 @@ function ItemPremio({ adicionar, premio, atualizar }) {
                         <p>R$ {premio.valor}</p>
                     </div>
                     <div className={styles.descricao}>
-                        <p>{premio.descricao}</p>
+                        <p><strong>Descrição:</strong> {premio.descricao}</p>
                     </div>
                     <div>
                         <p>{premio.disponivel === true ? "Disponível" : "Indisponível"}</p>

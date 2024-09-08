@@ -17,7 +17,7 @@ namespace IndicaMais.Controllers
             _premioService = premioService;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpPost]
         public async Task<IActionResult> Criar(CriarPremioRequest request)
         {
@@ -25,7 +25,7 @@ namespace IndicaMais.Controllers
             return Ok(premios);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpGet("listar")]
         public async Task<IActionResult> Listar()
         {
@@ -47,7 +47,7 @@ namespace IndicaMais.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpPatch("{id}")]
         public async Task<IActionResult> Editar(EditarPremioRequest request, int id)
         {
@@ -55,7 +55,7 @@ namespace IndicaMais.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Excluir(int id)
         {

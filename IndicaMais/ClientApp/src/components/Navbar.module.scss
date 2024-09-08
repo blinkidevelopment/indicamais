@@ -35,11 +35,7 @@ div.navbar a{
     text-decoration: none;
 }
 
-.logolmr {
-    width: 90px;
-    height: 60px;
-}
-
-.logolmr > *{
-    fill: $corFonte;
+img.logo {
+    width: 100%;
+    max-width: 100px;
 }

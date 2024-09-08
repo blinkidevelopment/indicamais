@@ -1,23 +1,38 @@
+import React, { useState, useEffect } from "react";
 import style from './Navbar.module.scss';
 import { faGear, faCircleUser, faGift, faMagnifyingGlass, faRightFromBracket, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Recursos from "../classes/Recursos";
 import Fetch from "../classes/Fetch";
+import { useTenant } from '../TenantContext';
 
 function Navbar() {
-    const recursos = new Recursos();
     const fetch = new Fetch();
-    const LMRLogoVazado = recursos.getLMRLogoVazado();
+    const tenant = useTenant();
 
     const desconectar = async () => {
         await fetch.desconectarEscritorio();
     }
+    const [logo, setLogo] = useState(null);
+    const [usuario, setUsuario] = useState(null);
+
+    useEffect(() => {
+        const logoBase64 = `data:${tenant.logoMimeType};base64,${tenant.logo}`;
+        setLogo(logoBase64);
+    }, [tenant]);
+
+    useEffect(() => {
+        const buscarDados = async () => {
+            var dados = await fetch.buscarUsuario();
+            setUsuario(dados);
+        }
+
+        buscarDados();
+    }, []);
 
     return (
         <div className={style.navbar}>
             <div className={style.logo} onClick={() => window.location.href = "/escritorio"}>
-                <h1>Indica</h1>
-                <LMRLogoVazado className={style.logolmr} />
+                <img src={logo} alt="Logo da Empresa" className={style.logo} />
             </div>
             <div className={style.links}>
                 <div>
@@ -26,15 +41,19 @@ function Navbar() {
                 <div>
                     <a href="/escritorio/novo-parceiro"><FontAwesomeIcon icon={faUserPlus} /> Novo parceiro</a>
                 </div>
-                <div>
-                    <a href="/escritorio/configuracoes"><FontAwesomeIcon icon={faGear} /> Configurações</a>
-                </div>
+                {usuario != null && usuario.role === "Admin" ? 
+                    <div>
+                        <a href="/escritorio/configuracoes"><FontAwesomeIcon icon={faGear} /> Configurações</a>
+                    </div>
+                : ""}
                 <div>
                     <a href="/escritorio/premios"><FontAwesomeIcon icon={faGift} /> Prêmios</a>
                 </div>
-                <div>
-                    <a href="/escritorio/usuarios"><FontAwesomeIcon icon={faCircleUser} /> Usuários</a>
-                </div>
+                {usuario != null && usuario.role === "Admin" ?
+                    <div>
+                        <a href="/escritorio/usuarios"><FontAwesomeIcon icon={faCircleUser} /> Usuários</a>
+                    </div>
+                : ""}
                 <div>
                     <a href="" onClick={() => desconectar()}><FontAwesomeIcon icon={faRightFromBracket} /> Sair</a>
                 </div>

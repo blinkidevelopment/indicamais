@@ -32,11 +32,27 @@
         return resposta;
     }
 
-    async buscarUsuario() {
+    async buscarParceiro() {
         var resposta;
 
         try {
             await fetch('api/parceiro', {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
+    async buscarUsuario() {
+        var resposta;
+
+        try {
+            await fetch('api/usuario', {
                 method: 'get',
                 headers: {
                     'Content-Type': 'application/json'
@@ -625,7 +641,7 @@
         return resposta;
     }
 
-    async criarUsuario(nome, email, senha, admin) {
+    async criarUsuario(nome, email, senha, cargo) {
         var resposta;
 
         try {
@@ -638,7 +654,8 @@
                     nome: nome,
                     email: email,
                     senha: senha,
-                    confirmacao: senha
+                    confirmacao: senha,
+                    cargo: cargo
                 })
             }).then((response) => response.json()).then((data) => { resposta = data });
         } catch {
@@ -679,7 +696,7 @@
         return resposta;
     }
 
-    async editarUsuario(id, nome, email, senha, admin, usuarioAntigo) {
+    async editarUsuario(id, nome, email, senha, cargo) {
         var resposta;
 
         try {
@@ -692,7 +709,8 @@
                     nome: nome,
                     email: email,
                     senha: senha,
-                    confirmacao: senha
+                    confirmacao: senha,
+                    cargo: cargo
                 })
             }).then((response) => response.json()).then((data) => { resposta = data });
         } catch {
@@ -815,6 +833,19 @@
         await fetch('api/empresa', {
             method: 'PATCH',
             body: formData
+        }).then((response) => response.json()).then((data) => { resposta = data });
+
+        return resposta;
+    }
+
+    async listarCargos() {
+        var resposta;
+
+        await fetch('api/usuario/cargos', {
+            method: 'get',
+            headers: {
+                "Content-Type": "application/json"
+            }
         }).then((response) => response.json()).then((data) => { resposta = data });
 
         return resposta;

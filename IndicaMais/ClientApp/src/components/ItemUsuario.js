@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+﻿import { useState, useEffect } from "react";
 import styles from "./ItemUsuario.module.scss";
 import { faPencil, faXmark, faFloppyDisk, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,15 +10,16 @@ function ItemUsuario({ adicionar, usuario, atualizar }) {
     const [edicao, setEdicao] = useState(false);
     const [exibirModal, setExibirModal] = useState(false);
     const [mensagemModal, setMensagemModal] = useState(null);
+    const [cargos, setCargos] = useState(null);
 
     async function criar() {
         var nome = document.getElementById("nome").value;
         var email = document.getElementById("email").value;
         var senha = document.getElementById("senha").value;
-        var admin = document.getElementById("admin").value === "true" ? true : false;
+        var cargo = document.getElementById("cargo").value;
 
-        if (nome && email && senha && admin !== null) {
-            var resposta = await fetch.criarUsuario(nome, email, senha, admin);
+        if (nome && email && senha && cargo) {
+            var resposta = await fetch.criarUsuario(nome, email, senha, cargo);
             if (resposta) {
                 atualizar();
                 setEdicao(false);
@@ -36,10 +37,10 @@ function ItemUsuario({ adicionar, usuario, atualizar }) {
         var nome = document.getElementById("nome").value;
         var email = document.getElementById("email").value;
         var senha = document.getElementById("senha").value;
-        var admin = document.getElementById("admin").value === "true" ? true : false;
+        var cargo = document.getElementById("cargo").value;
 
-        if (nome && email && admin !== null) {
-            var resposta = await fetch.editarUsuario(id, nome, email, senha, admin, usuario);
+        if (nome && email && cargo) {
+            var resposta = await fetch.editarUsuario(id, nome, email, senha, cargo);
             if (resposta) {
                 atualizar();
                 setEdicao(false);
@@ -62,6 +63,14 @@ function ItemUsuario({ adicionar, usuario, atualizar }) {
             return { ok: true, sucesso: false, mensagem: "Ocorreu um erro ao tentar excluir o usuário" };
         }
     }
+
+    useEffect(() => {
+        const buscarDados = async () => {
+            var dados = await fetch.listarCargos();
+            setCargos(dados);
+        }
+        buscarDados();
+    }, [])
 
     if (adicionar === true) {
         if (edicao === false) {
@@ -91,9 +100,12 @@ function ItemUsuario({ adicionar, usuario, atualizar }) {
                             <input id="senha" placeholder="Senha" type="password" />
                         </div>
                         <div>
-                            <select id="admin">
-                                <option value="true">Administrador</option>
-                                <option value="false">Usuário comum</option>
+                            <select id="cargo">
+                                {cargos && cargos.length > 0 ?
+                                    cargos.map((cargo) => (
+                                        <option value={cargo}>{cargo}</option>
+                                    ))
+                                : ""}
                             </select>
                         </div>
                         <div className={styles.divacao}>
@@ -116,6 +128,9 @@ function ItemUsuario({ adicionar, usuario, atualizar }) {
                     </div>
                     <div>
                         <p>{usuario.isRoot === true ? "Usuário raiz" : "Usuário comum"}</p>
+                    </div>
+                    <div>
+                        <p><strong>Cargo:</strong> {usuario.role}</p>
                     </div>
                     <div className={styles.divacao}>
                         <p><FontAwesomeIcon className={styles.acao} icon={faPencil} onClick={() => setEdicao(!edicao)} /></p>
@@ -146,9 +161,12 @@ function ItemUsuario({ adicionar, usuario, atualizar }) {
                         <input id="senha" placeholder="•••••••••••••••" type="password" />
                     </div>
                     <div>
-                        <select id="admin">
-                            <option selected={usuario.administrador === true ? true : false} value="true">Administrador</option>
-                            <option selected={usuario.administrador === false ? true : false} value="false">Usuário comum</option>
+                        <select id="cargo">
+                            {cargos && cargos.length > 0 ?
+                                cargos.map((cargo) => (
+                                    <option selected={usuario.role === cargo ? true : false} value={cargo}>{cargo}</option>
+                                ))
+                            : ""}
                         </select>
                     </div>
                     <div className={styles.divacao + " " + styles.divacaomenor}>

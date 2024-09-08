@@ -26,6 +26,22 @@ namespace IndicaMais.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Superadmin")]
+        [HttpPost("raiz")]
+        public async Task<IActionResult> CriarUsuarioRaiz(CriarUsuarioRaizRequest request)
+        {
+            var result = await _usuarioService.CriarUsuarioRaiz(request);
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "Admin,Gestor")]
+        [HttpGet]
+        public async Task<IActionResult> Buscar()
+        {
+            var usuario = await _usuarioService.Buscar();
+            return Ok(usuario);
+        }
+
         [Authorize(Roles = "Admin")]
         [HttpGet("listar")]
         public async Task<IActionResult> Listar()
@@ -70,6 +86,22 @@ namespace IndicaMais.Controllers
         {
             var result = await _usuarioService.Desconectar();
             return Ok(new { message = result });
+        }
+
+        [Authorize(Roles = "Superadmin")]
+        [HttpPost("cargo")]
+        public async Task<IActionResult> CriarCargo(CriarCargoRequest request)
+        {
+            var result = await _usuarioService.CriarCargo(request);
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("cargos")]
+        public async Task<IActionResult> ListarCargos()
+        {
+            var cargos = await _usuarioService.ListarCargos();
+            return Ok(cargos);
         }
     }
 }

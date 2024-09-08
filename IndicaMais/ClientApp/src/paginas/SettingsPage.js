@@ -11,6 +11,7 @@ function SettingsPage() {
 
     const [configuracoes, setConfiguracoes] = useState(null);
     const [logo, setLogo] = useState(null);
+    const [usuario, setUsuario] = useState(null);
 
     async function atualizarConfiguracao(chave){
         var valor = document.getElementById(chave).value;
@@ -60,6 +61,9 @@ function SettingsPage() {
         const buscarDados = async () => {
             var dados = await fetch.listarConfiguracoes();
             setConfiguracoes(dados);
+
+            var dadosUsuario = await fetch.buscarUsuario();
+            setUsuario(dadosUsuario);
         }
         buscarDados();
     }, []);
@@ -74,68 +78,77 @@ function SettingsPage() {
         setLogo(logoBase64);
     }, [tenant]);
 
-    return (
-        <div className={style.container}>
-            <h1 className={style.titulo}>Configurações</h1>
-            <div className={style.configuracoes}>
-                {configuracoes && configuracoes.length > 0 ?
-                    configuracoes.map((configuracao) => (
-                        <div className={style.configuracao}>
-                            <p>{configuracao.nome}</p>
-                            <input id={configuracao.chave} defaultValue={configuracao.valor} type="number" />
-                            <button onClick={() => atualizarConfiguracao(configuracao.chave)}>Salvar</button>
-                        </div>
-                    ))
-                : ""}
-            </div>
-            <hr />
-            <div>
-                {tenant != null ?
-                    <div className={style.editarempresa}>
-                        <div className={style.empresa}>
-                            <div className={style.dadosempresa}>
-                                <label for="nome">Nome da empresa</label>
-                                <input type="text" name="nome" id="nome" defaultValue={tenant.nome} />
-                                <div className={style.logoempresa}>
-                                    <img src={logo} alt="Logo da Empresa" className={style.logo} />
-                                    <input type="file" name="logo" id="logo" accept=".jpg,.jpeg,.png,.svg" />
+    if (usuario !== null && usuario.role === "Admin") {
+        return (
+            <div className={style.container}>
+                <h1 className={style.titulo}>Configurações</h1>
+                <div className={style.configuracoes}>
+                    {configuracoes && configuracoes.length > 0 ?
+                        configuracoes.map((configuracao) => (
+                            <div className={style.configuracao}>
+                                <p>{configuracao.nome}</p>
+                                <input id={configuracao.chave} defaultValue={configuracao.valor} type="number" />
+                                <button onClick={() => atualizarConfiguracao(configuracao.chave)}>Salvar</button>
+                            </div>
+                        ))
+                        : ""}
+                </div>
+                <hr />
+                <div>
+                    {tenant != null ?
+                        <div className={style.editarempresa}>
+                            <div className={style.empresa}>
+                                <div className={style.dadosempresa}>
+                                    <label for="nome">Nome da empresa</label>
+                                    <input type="text" name="nome" id="nome" defaultValue={tenant.nome} />
+                                    <div className={style.logoempresa}>
+                                        <img src={logo} alt="Logo da Empresa" className={style.logo} />
+                                        <input type="file" name="logo" id="logo" accept=".jpg,.jpeg,.png,.svg" />
+                                    </div>
+                                </div>
+                                <div className={style.cores}>
+                                    <div>
+                                        <label for="corPrimaria">Cor primária</label>
+                                        <input type="color" name="corPrimaria" id="corPrimaria" defaultValue={tenant.corPrimaria} />
+                                    </div>
+                                    <div>
+                                        <label for="corSecundaria">Cor secundária</label>
+                                        <input type="color" name="corSecundaria" id="corSecundaria" defaultValue={tenant.corSecundaria} />
+                                    </div>
+                                    <div>
+                                        <label for="corTerciaria">Cor terciária</label>
+                                        <input type="color" name="corTerciaria" id="corTerciaria" defaultValue={tenant.corTerciaria} />
+                                    </div>
+                                    <div>
+                                        <label for="corFundo">Cor do fundo</label>
+                                        <input type="color" name="corFundo" id="corFundo" defaultValue={tenant.corFundo} />
+                                    </div>
+                                    <div>
+                                        <label for="corFonte">Cor da fonte</label>
+                                        <input type="color" name="corFonte" id="corFonte" defaultValue={tenant.corFonte} />
+                                    </div>
+                                    <div>
+                                        <label for="corFonteSecundaria">Cor secundária da fonte</label>
+                                        <input type="color" name="corFonteSecundaria" id="corFonteSecundaria" defaultValue={tenant.corFonteSecundaria} />
+                                    </div>
                                 </div>
                             </div>
-                            <div className={style.cores}>
-                                <div>
-                                    <label for="corPrimaria">Cor primária</label>
-                                    <input type="color" name="corPrimaria" id="corPrimaria" defaultValue={tenant.corPrimaria} />
-                                </div>
-                                <div>
-                                    <label for="corSecundaria">Cor secundária</label>
-                                    <input type="color" name="corSecundaria" id="corSecundaria" defaultValue={tenant.corSecundaria} />
-                                </div>
-                                <div>
-                                    <label for="corTerciaria">Cor terciária</label>
-                                    <input type="color" name="corTerciaria" id="corTerciaria" defaultValue={tenant.corTerciaria} />
-                                </div>
-                                <div>
-                                    <label for="corFundo">Cor do fundo</label>
-                                    <input type="color" name="corFundo" id="corFundo" defaultValue={tenant.corFundo} />
-                                </div>
-                                <div>
-                                    <label for="corFonte">Cor da fonte</label>
-                                    <input type="color" name="corFonte" id="corFonte" defaultValue={tenant.corFonte} />
-                                </div>
-                                <div>
-                                    <label for="corFonteSecundaria">Cor secundária da fonte</label>
-                                    <input type="color" name="corFonteSecundaria" id="corFonteSecundaria" defaultValue={tenant.corFonteSecundaria} />
-                                </div>
+                            <div className={style.botaosalvar}>
+                                <button onClick={() => atualizarEmpresa()}>Salvar alterações</button>
                             </div>
                         </div>
-                        <div className={style.botaosalvar}>
-                            <button onClick={() => atualizarEmpresa()}>Salvar alterações</button>
-                        </div>
-                    </div>
-                : ""}
+                        : ""}
+                </div>
             </div>
-        </div>
-    );
+        );
+    } else {
+        return (
+            <div className={style.container}>
+                <h1 className={style.titulo}>Ops...</h1>
+                <p className={style.aviso}>Você não tem permissão para acessar essa página.</p>
+            </div>
+        );
+    }
 }
 
 export default SettingsPage;

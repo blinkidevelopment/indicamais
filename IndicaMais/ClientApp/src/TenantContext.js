@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import Fetch from './classes/Fetch';
+import EmpresaInexistente from './components/EmpresaInexistente';
 
 const fetch = new Fetch();
 
@@ -10,7 +11,7 @@ export const useTenant = () => {
 };
 
 export const TenantProvider = ({ children }) => {
-    const [tenant, setTenant] = useState('');
+    const [tenant, setTenant] = useState(null);
 
     useEffect(() => {
         const buscarDados = async () => {
@@ -27,17 +28,18 @@ export const TenantProvider = ({ children }) => {
 
     const root = document.documentElement;
 
-    root.style.setProperty('--corPrimaria', tenant.corPrimaria);
-    root.style.setProperty('--corSecundaria', tenant.corSecundaria);
-    root.style.setProperty('--corTerciaria', tenant.corTerciaria);
-    root.style.setProperty('--corFundo', tenant.corFundo);
-    root.style.setProperty('--corFonte', tenant.corFonte);
-    root.style.setProperty('--corFonteSecundaria', tenant.corFonteSecundaria);
+    if (tenant != null) {
+        root.style.setProperty('--corPrimaria', tenant.corPrimaria);
+        root.style.setProperty('--corSecundaria', tenant.corSecundaria);
+        root.style.setProperty('--corTerciaria', tenant.corTerciaria);
+        root.style.setProperty('--corFundo', tenant.corFundo);
+        root.style.setProperty('--corFonte', tenant.corFonte);
+        root.style.setProperty('--corFonteSecundaria', tenant.corFonteSecundaria);
+    }
 
-    //TODO: Tratar o que deve ser feito caso o tenant não exista
     return (
         <TenantContext.Provider value={tenant}>
-            {tenant !== '' ? children : ''}
+            {tenant !== null ? children : <EmpresaInexistente />}
         </TenantContext.Provider>
     );
 };

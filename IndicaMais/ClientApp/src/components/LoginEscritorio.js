@@ -1,18 +1,20 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import Recursos from "../classes/Recursos";
 import style from "./Login.module.scss";
 import Fetch from "../classes/Fetch";
-import InputMask from "react-input-mask";
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTenant } from '../TenantContext';
 
 function LoginEscritorio() {
     var recursos = new Recursos();
     var fetch = new Fetch();
-    const EnviandoIcone = recursos.getEnviando();
+    const tenant = useTenant();
 
+    const EnviandoIcone = recursos.getEnviando();
     const [enviado, setEnviado] = useState(null);
     const [exibirSenha, setExibirSenha] = useState(false);
+    const [logo, setLogo] = useState(null);
 
     function enviar(e) {
         if (e.keyCode === 13) {
@@ -41,11 +43,17 @@ function LoginEscritorio() {
         }
     }
 
+    useEffect(() => {
+        const logoBase64 = `data:${tenant.logoMimeType};base64,${tenant.logo}`;
+        setLogo(logoBase64);
+    }, [tenant]);
+
     return (
         <div className={style.login}>
             <div className={style.logincard}>
-                <h1>Login</h1>
+                <img src={logo} alt="Logo da Empresa" className={style.logo} />
                 <div className={style.formulario}>
+                    <h1>{tenant.nomeApp}</h1>
                     <div className={style.campo}>
                         <input type="text" placeholder="E-mail" id="email" />
                     </div>

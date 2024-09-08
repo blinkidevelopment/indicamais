@@ -28,7 +28,7 @@ namespace IndicaMais.Controllers
             return Ok(parceiro);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpGet("{id}")]
         public async Task<IActionResult> Buscar(int id)
         {
@@ -44,7 +44,7 @@ namespace IndicaMais.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpPost("criar-interno")]
         public async Task<IActionResult> Criar(CriarParceiroInternamenteRequest request)
         {
@@ -94,7 +94,7 @@ namespace IndicaMais.Controllers
             return result ? Ok(true) : Conflict();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpGet("listar")]
         public async Task<IActionResult> Listar([FromQuery] int pagina, int tamanho, string? nome, string? cpf, int? tipo, bool? fechou, bool? indicado)
         {
@@ -137,7 +137,7 @@ namespace IndicaMais.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpGet("{id}/indicacoes")]
         public async Task<IActionResult> ListarIndicacoes(int id, [FromQuery] int pagina, int tamanho)
         {
@@ -145,7 +145,7 @@ namespace IndicaMais.Controllers
             return Ok(new { result.indicacoes, result.temMais });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpGet("{id}/indicacoes/contar")]
         public async Task<IActionResult> ContarIndicacoes(int id, [FromQuery] bool fechadas)
         {
@@ -153,7 +153,7 @@ namespace IndicaMais.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpGet("{id}/transacoes")]
         public async Task<IActionResult> ListarTransacoes(int id, [FromQuery] int pagina, int tamanho)
         {
@@ -161,7 +161,7 @@ namespace IndicaMais.Controllers
             return Ok(new { result.transacoes, result.temMais });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpPatch("{id}/alterar-senha")]
         public async Task<IActionResult> AlterarSenha(AlterarSenhaRequest request, int id)
         {
@@ -169,7 +169,7 @@ namespace IndicaMais.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpPatch("{id}/alterar-status")]
         public async Task<IActionResult> AlterarStatus(int id)
         {
@@ -177,7 +177,7 @@ namespace IndicaMais.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Gestor")]
         [HttpPatch("{id}/alterar-status-repasse")]
         public async Task<IActionResult> AlterarStatusRepasse(int id)
         {
