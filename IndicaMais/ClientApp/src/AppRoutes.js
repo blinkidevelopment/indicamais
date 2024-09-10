@@ -12,6 +12,7 @@ import GiftsPage from "./paginas/GiftsPage";
 import UsersPage from "./paginas/UsersPage";
 import PrivacyPolicyPage from "./paginas/PrivacyPolicyPage";
 import NewPartnerPage from "./paginas/NewPartnerPage";
+import DataPage from "./paginas/DataPage";
 
 const AppRoutes = () => {
     return (
@@ -25,6 +26,7 @@ const AppRoutes = () => {
             <Route path="politica-de-privacidade" element={<PrivacyPolicyPage />} />
             <Route path="/escritorio" element={<PrivateRouteEscritorio />}>
                 <Route path="" element={<SearchPage />} />
+                <Route path="metricas" element={<DataPage />} />
                 <Route path="novo-parceiro" element={<NewPartnerPage />} />
                 <Route path="configuracoes" element={<SettingsPage />} />
                 <Route path="premios" element={<GiftsPage />} />

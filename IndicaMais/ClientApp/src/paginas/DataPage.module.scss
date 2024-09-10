@@ -1,0 +1,157 @@
+﻿@import '../_colors.scss';
+
+.bodybg {
+    background: $corFundo;
+}
+
+h1.titulo {
+    text-align: center;
+    margin-top: 20px;
+    color: $corFonteSecundaria;
+    padding: 25px 0 20px;
+}
+
+div.container {
+    padding-top: 72px;
+}
+
+div.container h3{
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+div.metricas {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 10px;
+}
+
+div.metricas p {
+    font-weight: bold;
+    font-size: 3em;
+}
+
+div.metricas h4{
+    font-weight: normal;
+}
+
+div.metricas div {
+    background: #ffffff8c;
+    border-radius: 20px;
+    border: 1px solid white;
+    padding: 10px;
+    width: 20%;
+}
+
+div.filtrometricas {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+div.filtrometricas input[type=date] {
+    border: 0;
+    height: 40px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+div.filtrometricas button {
+    border: 0;
+    border-radius: 5px;
+    background: $corPrimaria;
+    color: $corFonte;
+    height: 40px;
+}
+
+div.parceiros {
+    background: $corSecundaria;
+    color: $corFonteSecundaria;
+}
+
+div.transacoes {
+    background: $corTerciaria;
+    color: $corFonte;
+}
+
+div.filtro {
+    padding: 20px;
+    margin: 5px 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+div.filtro button {
+    margin-top: 20px;
+    border: 0;
+    color: $corFonteSecundaria;
+    border-radius: 10px;
+    height: 40px;
+    width: 100%;
+}
+
+div.containerfiltros {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+div.containerfiltros input, div.containerfiltros select {
+    border: 0;
+    height: 30px;
+    width: 100%;
+    max-width: 250px;
+    color: $corFonteSecundaria;
+}
+
+div.templates {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+div.templates div {
+    padding: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+div.templates div p {
+    margin-bottom: 0;
+}
+
+div.relacaoindicadorindicado {
+    background: $corPrimaria;
+    color: $corFonte;
+}
+
+div.relacaoindicadorindicado svg {
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+p.aviso {
+    text-align: center;
+}
+
+@media only screen and (max-width: 1357px) {
+    div.metricas {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 0 34px;
+    }
+
+    div.metricas div {
+        flex: 1 1 calc(50% - 20px);
+    }
+}

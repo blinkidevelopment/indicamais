@@ -20,6 +20,7 @@ namespace IndicaMais.Services
         Task<RespostaAPI> ListarCobrancas(int pagina);
         Task<int> ContarIndicacoes(bool fechadas);
         Task<int> ContarIndicacoes(int id, bool fechadas);
+        Task<int> ContarTodasIndicacoes(bool fechadas, DateTime? dataInicial, DateTime? dataFinal);
         Task<bool> Editar(EditarParceiroRequest request);
         Task<bool> AlterarSenha(int id, AlterarSenhaRequest request);
         Task<bool> AlterarStatus(int id);
@@ -31,5 +32,7 @@ namespace IndicaMais.Services
         Task<bool> RecuperarSenha(RecuperarSenhaRequest request);
         Task<bool> Validar();
         Task<string> Desconectar();
+        Task<byte[]?> GerarRelatorio(GerarRelatorioParceirosRequest request);
+        Task<byte[]?> GerarRelacaoIndicadorIndicado();
     }
 }

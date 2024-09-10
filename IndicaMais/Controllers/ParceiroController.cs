@@ -116,6 +116,14 @@ namespace IndicaMais.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet("indicacoes/contar/todas")]
+        public async Task<IActionResult> ContarTodasIndicacoes([FromQuery] bool fechadas, DateTime? dataInicial, DateTime? dataFinal)
+        {
+            var result = await _parceiroService.ContarTodasIndicacoes(fechadas, dataInicial, dataFinal);
+            return Ok(result);
+        }
+
         [HttpGet("transacoes")]
         public async Task<IActionResult> ListarTransacoes([FromQuery] int pagina, int tamanho)
         {
@@ -221,6 +229,22 @@ namespace IndicaMais.Controllers
         {
             var resultado = await _parceiroService.Desconectar();
             return Ok(new { message = resultado });
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("relatorio")]
+        public async Task<IActionResult> GerarRelatorio(GerarRelatorioParceirosRequest request)
+        {
+            var result = await _parceiroService.GerarRelatorio(request);
+            return File(result, "text/csv", "relatorio_parceiros.csv");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("relatorio/relacao-indicador-indicado")]
+        public async Task<IActionResult> GerarRelacaoIndicadorIndicado()
+        {
+            var result = await _parceiroService.GerarRelacaoIndicadorIndicado();
+            return File(result, "text/csv", "relacao_indicador_indicado.csv");
         }
     }
 }

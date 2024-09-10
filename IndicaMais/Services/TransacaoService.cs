@@ -3,6 +3,7 @@ using IndicaMais.Models;
 using IndicaMais.Services.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace IndicaMais.Services
 {
@@ -171,6 +172,124 @@ namespace IndicaMais.Services
             {
                 return false;
             }
+        }
+
+        public async Task<int> ContarTodasTransacoes(bool premio, DateTime? dataInicial, DateTime? dataFinal)
+        {
+            var query = _context.Transacoes.AsQueryable();
+
+            if (premio)
+            {
+                query = query.Where(t => t.Premio != null);
+            }
+
+            if (dataFinal.HasValue)
+            {
+                dataFinal = dataFinal.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+            }
+
+            if (dataInicial.HasValue && dataFinal.HasValue)
+            {
+                if (premio)
+                {
+                    query = query.Where(t => t.Data >= dataInicial && t.Data <= dataFinal);
+                }
+                else
+                {
+                    query = query.Where(t => t.Data >= dataInicial && t.Data <= dataFinal);
+                }
+            }
+            else if (dataInicial.HasValue)
+            {
+                if (premio)
+                {
+                    query = query.Where(t => t.Data >= dataInicial);
+                }
+                else
+                {
+                    query = query.Where(t => t.Data >= dataInicial);
+                }
+            }
+            else if (dataFinal.HasValue)
+            {
+                if (premio)
+                {
+                    query = query.Where(t => t.Data <= dataFinal);
+                }
+                else
+                {
+                    query = query.Where(t => t.Data <= dataFinal);
+                }
+            }
+
+            int totalInd = await query.CountAsync();
+
+            return totalInd;
+        }
+
+        public async Task<byte[]?> GerarRelatorio(GerarRelatorioTransacoesRequest request)
+        {
+            var query = _context.Transacoes.AsQueryable();
+
+            if (!string.IsNullOrEmpty(request.Nome))
+            {
+                query = query.Where(t => t.Parceiro.Nome.StartsWith(request.Nome.ToUpper()));
+            }
+
+            if (request.Tipo.HasValue)
+            {
+                query = query.Where(t => t.Tipo == request.Tipo.Value);
+            }
+
+            if (request.Baixa.HasValue)
+            {
+                query = query.Where(t => t.Baixa == request.Baixa.Value);
+            }
+
+            if (request.Premio.HasValue)
+            {
+                query = query.Where(t => t.Premio.Id == request.Premio);
+            }
+
+            if (request.DataFinal.HasValue)
+            {
+                request.DataFinal = request.DataFinal.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+            }
+
+            if (request.DataInicial.HasValue && request.DataFinal.HasValue)
+            {
+                query = query.Where(t => t.Data >= request.DataInicial && t.Data <= request.DataFinal);
+            }
+            else if (request.DataInicial.HasValue)
+            {
+                query = query.Where(t => t.Data >= request.DataInicial);
+            }
+            else if (request.DataFinal.HasValue)
+            {
+                query = query.Where(t => t.Data <= request.DataFinal);
+            }
+
+            var transacoes = await query
+                .Include(t => t.Parceiro)
+                .Include(t => t.Premio)
+                .ToListAsync();
+
+            var csv = new StringBuilder();
+            csv.AppendLine("Id,Nome do Parceiro,Valor,Tipo,Situação,Data,Prêmio Resgatado");
+
+            foreach (var transacao in transacoes)
+            { 
+                csv.AppendLine($"{transacao.Id},{transacao.Parceiro.Nome},{transacao.Valor}," +
+                    $"{(transacao.Tipo == 0 ? "Resgate" : transacao.Tipo == 1 ? "Abate" : "Prêmio")}," +
+                    $"{(transacao.Baixa ? "Baixado" : "Em aberto")}," +
+                    $"{transacao.Data:yyyy-MM-dd},{transacao.Premio?.Nome ?? "N/A"}");
+            }
+
+            var bom = new byte[] { 0xEF, 0xBB, 0xBF };
+            var csvBytes = Encoding.UTF8.GetBytes(csv.ToString());
+            var result = bom.Concat(csvBytes).ToArray();
+
+            return result;
         }
     }
 }

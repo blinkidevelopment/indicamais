@@ -39,5 +39,21 @@ namespace IndicaMais.Controllers
             var result = await _transacaoService.MudarStatus(id);
             return Ok(result);
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("contar/todas")]
+        public async Task<IActionResult> ContarTodasTransacoes([FromQuery] bool premio, DateTime? dataInicial, DateTime? dataFinal)
+        {
+            var result = await _transacaoService.ContarTodasTransacoes(premio, dataInicial, dataFinal);
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("relatorio")]
+        public async Task<IActionResult> GerarRelatorio(GerarRelatorioTransacoesRequest request)
+        {
+            var result = await _transacaoService.GerarRelatorio(request);
+            return File(result, "text/csv", "relatorio_transacoes.csv");
+        }
     }
 }

@@ -17,6 +17,5 @@ namespace IndicaMais.Services
         Task<string> Desconectar();
         Task<bool> CriarCargo(CriarCargoRequest request);
         Task<IEnumerable<string>> ListarCargos();
-        Task<IdentityResult> CadastrarAdministradorAsync(string email, string password);
     }
 }

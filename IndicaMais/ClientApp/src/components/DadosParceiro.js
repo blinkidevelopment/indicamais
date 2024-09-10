@@ -141,7 +141,9 @@ function DadosParceiro({ id, fechar }) {
                                             dados.lista.map((transacao) => (
                                                 <tr>
                                                     <td>{utils.formatarData(transacao.data)}</td>
-                                                    <td>R$ {transacao.valor}</td>
+                                                    {transacao.tipo === 2 ?
+                                                        <td>{transacao.valor} pontos</td> 
+                                                    : <td>R$ {transacao.valor}</td>}
                                                     <td>{transacao.tipo === 0 ? "Resgate" : transacao.tipo === 1 ? "Abate" : <p className={style.premioresgatado}><FontAwesomeIcon icon={faGift} /> {transacao.nomePremio}</p>}</td>
                                                     <td><input type="checkbox" checked={transacao.baixa} onClick={() => mudarStatusTransacao(transacao.id)} /></td>
                                                 </tr>

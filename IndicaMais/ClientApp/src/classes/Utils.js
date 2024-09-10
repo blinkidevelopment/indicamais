@@ -87,6 +87,20 @@ class Utils {
             return '#ffffff';
         }
     }
+
+    async baixarRelatorio(response) {
+        if (response.status === 200) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'relatorio.csv';
+            document.body.appendChild(a);
+            a.click();
+        } else {
+            alert("Ocorreu um erro ao gerar o relatório");
+        }
+    }
 }
 
 export default Utils;

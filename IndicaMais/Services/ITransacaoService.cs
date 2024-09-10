@@ -9,5 +9,7 @@ namespace IndicaMais.Services
         Task<(IEnumerable<TransacaoMin> transacoes, bool temMais)> Listar(int id, int pagina, int tamanho);
         Task<(IEnumerable<TransacaoMin> transacoes, bool temMais)> Listar(int pagina, int tamanho, int? tipo, bool? baixa, string? nome, string? cpf);
         Task<bool> MudarStatus(int id);
+        Task<int> ContarTodasTransacoes(bool premio, DateTime? dataInicial, DateTime? dataFinal);
+        Task<byte[]?> GerarRelatorio(GerarRelatorioTransacoesRequest request);
     }
 }

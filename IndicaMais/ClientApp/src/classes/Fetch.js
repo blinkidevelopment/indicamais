@@ -330,6 +330,38 @@
         return resposta;
     }
 
+    async contarTodasIndicacoes(fechadas, dataInicial, dataFinal) {
+        var resposta;
+
+        try {
+            await fetch('api/parceiro/indicacoes/contar/todas?fechadas=' + fechadas + "&dataInicial=" + dataInicial + "&dataFinal=" + dataFinal, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
+    async contarTodasTransacoes(premio, dataInicial, dataFinal) {
+        var resposta;
+
+        try {
+            await fetch('api/transacao/contar/todas?premio=' + premio + "&dataInicial=" + dataInicial + "&dataFinal=" + dataFinal, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
     async listarIndicacoes(pagina) {
         var resposta;
 
@@ -849,6 +881,56 @@
         }).then((response) => response.json()).then((data) => { resposta = data });
 
         return resposta;
+    }
+
+    async gerarRelatorioParceiros(nome, tipo, fechou, foiIndicado, dataInicial, dataFinal, tipoData) {
+        var response = await fetch('api/parceiro/relatorio', {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nome: nome,
+                tipo: tipo === "" ? null : tipo,
+                fechou: fechou === "" ? null : (fechou === "true"),
+                foiIndicado: foiIndicado === "" ? null : (foiIndicado === "true"),
+                dataInicial: dataInicial === "" ? null : dataInicial,
+                dataFinal: dataFinal === "" ? null : dataFinal,
+                tipoData: tipoData === "" ? null : tipoData
+            })
+        });
+
+        return response;
+    }
+
+    async gerarRelatorioTransacoes(nome, tipo, baixa, dataInicial, dataFinal, premio) {
+        var response = await fetch('api/transacao/relatorio', {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nome: nome,
+                tipo: tipo === "" ? null : tipo,
+                baixa: baixa === "" ? null : (baixa === "true"),
+                dataInicial: dataInicial === "" ? null : dataInicial,
+                dataFinal: dataFinal === "" ? null : dataFinal,
+                premio: premio === "" ? null : premio
+            })
+        });
+
+        return response;
+    }
+
+    async gerarRelacaoIndicadorIndicado() {
+        var response = await fetch('api/parceiro/relatorio/relacao-indicador-indicado', {
+            method: 'get',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        return response;
     }
 }
 

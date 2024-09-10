@@ -41,7 +41,7 @@ function SearchPage() {
     }
 
     async function pesquisar() {
-        var nome = document.getElementById("nome").value.replace(/\s+/g, " ").trim().toUpperCase();
+        var nome = document.getElementById("nome").value.replace(/\s+/g, " ").trim();
         var cpf = document.getElementById("cpf").value.replace(/[.\-_]/g, '');
         var tipo = modoPesquisa.transacao === true ? (document.getElementById("tipo").value === '-' ? '' : document.getElementById("tipo").value) : "";
         var tipoParceiro = modoPesquisa.parceiro === true ? (document.getElementById("tipoParceiro").value === '-' ? '' : document.getElementById("tipoParceiro").value) : "";

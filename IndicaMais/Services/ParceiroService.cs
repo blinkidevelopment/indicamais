@@ -5,6 +5,7 @@ using IndicaMais.Services.Integrations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace IndicaMais.Services
 {
@@ -404,6 +405,59 @@ namespace IndicaMais.Services
             return 0;
         }
 
+        public async Task<int> ContarTodasIndicacoes(bool fechadas, DateTime? dataInicial, DateTime? dataFinal)
+        {
+            var query = _context.Indicacao.AsQueryable();
+
+            if (fechadas)
+            {
+                query = query.Where(i => i.Indicado.Fechou == true);
+            }
+
+            if (dataFinal.HasValue)
+            {
+                dataFinal = dataFinal.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+            }
+
+            if (dataInicial.HasValue && dataFinal.HasValue)
+            {
+                if (fechadas)
+                {
+                    query = query.Where(i => i.Indicado.FechouEm >= dataInicial && i.Indicado.FechouEm <= dataFinal);
+                }
+                else
+                {
+                    query = query.Where(i => i.Indicado.CriadoEm >= dataInicial && i.Indicado.CriadoEm <= dataFinal);
+                }
+            }
+            else if (dataInicial.HasValue)
+            {
+                if (fechadas)
+                {
+                    query = query.Where(i => i.Indicado.FechouEm >= dataInicial);
+                }
+                else
+                {
+                    query = query.Where(i => i.Indicado.CriadoEm >= dataInicial);
+                }
+            }
+            else if (dataFinal.HasValue)
+            {
+                if (fechadas)
+                {
+                    query = query.Where(i => i.Indicado.FechouEm <= dataFinal);
+                }
+                else
+                {
+                    query = query.Where(i => i.Indicado.CriadoEm <= dataFinal);
+                }
+            }
+
+            int totalInd = await query.CountAsync();
+
+            return totalInd;
+        }
+
         public async Task<bool> AlterarSenha(int id, AlterarSenhaRequest request)
         {
             if (request.Senha == request.Confirmacao)
@@ -442,9 +496,13 @@ namespace IndicaMais.Services
                             .FirstOrDefaultAsync();
 
                         parceiro.Fechou = true;
+                        parceiro.FechouEm = DateTime.UtcNow;
                         _context.Parceiros.Update(parceiro);
 
-                        var indicador = await _context.Indicacao.Where(i => i.Indicado.Id == parceiro.Id).Select(i => i.Parceiro).FirstOrDefaultAsync();
+                        var indicador = await _context.Indicacao
+                            .Where(i => i.Indicado.Id == parceiro.Id)
+                            .Select(i => i.Parceiro)
+                            .FirstOrDefaultAsync();
 
                         if (indicador != null)
                         {
@@ -575,6 +633,118 @@ namespace IndicaMais.Services
         {
             await _signInManager.SignOutAsync();
             return "Deslogado com sucesso";
+        }
+
+        public async Task<byte[]?> GerarRelatorio(GerarRelatorioParceirosRequest request)
+        {
+            var query = _context.Parceiros.AsQueryable();
+
+            if (!string.IsNullOrEmpty(request.Nome))
+            {
+                query = query.Where(p => p.Nome.StartsWith(request.Nome.ToUpper()));
+            }
+
+            if (request.Tipo.HasValue)
+            {
+                query = query.Where(p => p.Tipo == request.Tipo.Value);
+            }
+
+            if (request.Fechou.HasValue)
+            {
+                query = query.Where(p => p.Fechou == request.Fechou.Value);
+            }
+
+            if (request.FoiIndicado.HasValue)
+            {
+                if (request.FoiIndicado.Value)
+                {
+                    query = query.Where(p => _context.Indicacao.Any(i => i.Indicado.Id == p.Id));
+                }
+                else
+                {
+                    query = query.Where(p => !_context.Indicacao.Any(i => i.Indicado.Id == p.Id));
+                }
+            }
+
+            if ((request.DataInicial.HasValue || request.DataFinal.HasValue) && !string.IsNullOrEmpty(request.TipoData))
+            {
+                if (request.DataFinal.HasValue)
+                {
+                    request.DataFinal = request.DataFinal.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+                }
+
+                if (request.TipoData == "criadoEm")
+                {
+                    if (request.DataInicial.HasValue && request.DataFinal.HasValue)
+                    {
+                        query = query.Where(p => p.CriadoEm >= request.DataInicial && p.CriadoEm <= request.DataFinal);
+                    }
+                    else if (request.DataInicial.HasValue)
+                    {
+                        query = query.Where(p => p.CriadoEm >= request.DataInicial);
+                    }
+                    else if (request.DataFinal.HasValue)
+                    {
+                        query = query.Where(p => p.CriadoEm <= request.DataFinal);
+                    }
+                }
+                else if (request.TipoData == "fechouEm")
+                {
+                    if (request.DataInicial.HasValue && request.DataFinal.HasValue)
+                    {
+                        query = query.Where(p => p.FechouEm >= request.DataInicial && p.FechouEm <= request.DataFinal);
+                    }
+                    else if (request.DataInicial.HasValue)
+                    {
+                        query = query.Where(p => p.FechouEm >= request.DataInicial);
+                    }
+                    else if (request.DataFinal.HasValue)
+                    {
+                        query = query.Where(p => p.FechouEm <= request.DataFinal);
+                    }
+                }
+            }
+
+            var parceiros = await query.ToListAsync();
+
+            var csv = new StringBuilder();
+            csv.AppendLine("Id,Nome,Telefone,Data de Cadastro,Fechou Contrato?,Data de Fechamento");
+
+            foreach (var parceiro in parceiros)
+            {
+                csv.AppendLine($"{parceiro.Id},{parceiro.Nome},{parceiro.Telefone}," +
+                    $"{parceiro.CriadoEm:yyyy-MM-dd},{(parceiro.Fechou ? "Sim" : "Não")}," +
+                    $"{(parceiro.FechouEm?.ToString("yyyy-MM-dd") ?? "N/A")}");
+            }
+
+            var bom = new byte[] { 0xEF, 0xBB, 0xBF };
+            var csvBytes = Encoding.UTF8.GetBytes(csv.ToString());
+            var result = bom.Concat(csvBytes).ToArray();
+
+            return result;
+        }
+
+        public async Task<byte[]?> GerarRelacaoIndicadorIndicado()
+        {
+            var indicacoes = await _context.Indicacao
+                .Include(i => i.Indicado)
+                .Include(i => i.Parceiro)
+                .ToListAsync();
+
+            var csv = new StringBuilder();
+            csv.AppendLine("Nome do Indicador,Nome do Indicado,Data da Indicação");
+
+            foreach (var indicacao in indicacoes)
+            {
+                csv.AppendLine($"{indicacao.Parceiro.Nome}, {indicacao.Indicado.Nome}, " +
+                    $"{indicacao.Indicado.CriadoEm:yyyy-MM-dd}");
+            }
+
+            var bom = new byte[] { 0xEF, 0xBB, 0xBF };
+            var csvBytes = Encoding.UTF8.GetBytes(csv.ToString());
+            var result = bom.Concat(csvBytes).ToArray();
+
+            return result;
         }
     }
 }

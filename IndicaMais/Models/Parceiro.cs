@@ -29,6 +29,10 @@ namespace IndicaMais.Models
 
         public bool Login { get; set; } = true;
 
+        public DateTime CriadoEm { get; set; } = DateTime.UtcNow;
+
+        public DateTime? FechouEm { get; set; }
+
         [Required]
         public Tenant Tenant { get; set; }
 
