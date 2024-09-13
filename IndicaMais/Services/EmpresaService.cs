@@ -33,9 +33,13 @@ namespace IndicaMais.Services
                     return false;
                 }
 
-                var mimeTypesPermitidos = new List<string> { "image/jpeg", "image/png", "image/svg+xml" };
+                var mtPermitidosLogo = new List<string> { "image/jpeg", "image/png", "image/svg+xml" };
+                var mtPermitidosFavicon = new List<string> { "image/x-icon", "image/vnd.microsoft.icon" };
+                var mtPermitidosAppleIcon = new List<string> { "image/png" };
 
-                if (!mimeTypesPermitidos.Contains(request.Logo.ContentType))
+                if (!mtPermitidosLogo.Contains(request.Logo.ContentType) || 
+                    !mtPermitidosFavicon.Contains(request.Favicon.ContentType) ||
+                    !mtPermitidosAppleIcon.Contains(request.AppleIcon.ContentType))
                 {
                     return false;
                 }
@@ -45,6 +49,20 @@ namespace IndicaMais.Services
                 {
                     await request.Logo.CopyToAsync(memoryStream);
                     logoBytes = memoryStream.ToArray();
+                }
+
+                byte[] faviconBytes;
+                using (var memoryStream = new MemoryStream())
+                {
+                    await request.Favicon.CopyToAsync(memoryStream);
+                    faviconBytes = memoryStream.ToArray();
+                }
+
+                byte[] appleIconBytes;
+                using (var memoryStream = new MemoryStream())
+                {
+                    await request.AppleIcon.CopyToAsync(memoryStream);
+                    appleIconBytes = memoryStream.ToArray();
                 }
 
                 var tenant = new Tenant
@@ -59,6 +77,10 @@ namespace IndicaMais.Services
                     NomeApp = request.NomeApp,
                     Logo = logoBytes,
                     LogoMimeType = request.Logo.ContentType,
+                    Favicon = faviconBytes,
+                    FaviconMimeType = request.Favicon.ContentType,
+                    AppleIcon = appleIconBytes,
+                    AppleIconMimeType = request.AppleIcon.ContentType,
                     CorPrimaria = request.CorPrimaria,
                     CorSecundaria = request.CorSecundaria,
                     CorTerciaria = request.CorTerciaria,

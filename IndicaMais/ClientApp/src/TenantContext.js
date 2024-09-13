@@ -1,9 +1,10 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import Fetch from './classes/Fetch';
+import Utils from './classes/Utils';
 import EmpresaInexistente from './components/EmpresaInexistente';
 
 const fetch = new Fetch();
-
+const utils = new Utils();
 const TenantContext = createContext();
 
 export const useTenant = () => {
@@ -20,6 +21,8 @@ export const TenantProvider = ({ children }) => {
 
             if (dados != null) {
                 document.title = dados.nomeApp;
+                utils.definirIcones(dados);
+                utils.gerarManifest(dados);
             }
         }
 

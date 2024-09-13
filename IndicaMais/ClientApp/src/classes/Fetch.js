@@ -1004,12 +1004,16 @@
     async buscarEmpresa() {
         var resposta;
 
-        await fetch('api/empresa', {
-            method: 'get',
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then((response) => response.json()).then((data) => { resposta = data });
+        try {
+            await fetch('api/empresa', {
+                method: 'get',
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
 
         return resposta;
     }

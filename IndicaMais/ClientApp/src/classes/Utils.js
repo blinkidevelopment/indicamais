@@ -88,6 +88,58 @@ class Utils {
         }
     }
 
+    definirIcones(empresa) {
+        const favicon = document.getElementById('favicon');
+        const shortcutIcon = document.getElementById('shortcut-icon');
+        favicon.href = `data:${empresa.faviconMimeType};base64,${empresa.favicon}`;
+        shortcutIcon.href = `data:${empresa.faviconMimeType};base64,${empresa.favicon}`;
+
+        let appleIcon = document.getElementById('apple-touch-icon');
+        if (!appleIcon) {
+            appleIcon = document.createElement('link');
+            appleIcon.rel = 'apple-touch-icon';
+            appleIcon.id = 'apple-touch-icon';
+            document.head.appendChild(appleIcon);
+        }
+        appleIcon.href = `data:${empresa.appleIconMimeType};base64,${empresa.appleIcon}`;
+    }
+
+    gerarManifest(empresa) {
+        const manifest = {
+            short_name: empresa.nomeApp || "Indica+",
+            name: empresa.nomeApp || "Indica+",
+            icons: [
+                {
+                    src: `data:${empresa.faviconMimeType};base64,${empresa.favicon}`,
+                    sizes: "64x64 32x32 24x24 16x16",
+                    type: empresa.faviconMimeType
+                },
+                {
+                    src: `data:${empresa.appleIconMimeType};base64,${empresa.appleIcon}`,
+                    sizes: "180x180",
+                    type: empresa.appleIconMimeType
+                }
+            ],
+            start_url: "/",
+            display: "standalone",
+            background_color: empresa.corFundo || "#2c3e50"
+        };
+
+        const manifestJson = JSON.stringify(manifest);
+
+        let manifestLink = document.querySelector('link[rel="manifest"]');
+        if (!manifestLink) {
+            manifestLink = document.createElement('link');
+            manifestLink.rel = 'manifest';
+            document.head.appendChild(manifestLink);
+        }
+
+        const blob = new Blob([manifestJson], { type: 'application/json' });
+        const manifestUrl = URL.createObjectURL(blob);
+
+        manifestLink.href = manifestUrl;
+    }
+
     async baixarRelatorio(response) {
         if (response.status === 200) {
             const blob = await response.blob();

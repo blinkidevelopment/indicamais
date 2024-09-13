@@ -1,6 +1,6 @@
 {
-  "short_name": "Indica LMR",
-  "name": "Indica LMR",
+  "short_name": "Indica+",
+  "name": "Indica+",
   "icons": [
     {
       "src": "icons/icone_app.ico",
@@ -10,5 +10,5 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#00643c"
+  "background_color": "#2c3e50"
 }
