@@ -20,8 +20,10 @@ namespace IndicaMais.DbContexts
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Premio> Premios { get; set; }
-        public DbSet<Indicacao> Indicacao { get; set; }
+        public DbSet<Indicacao> Indicacoes { get; set; }
         public DbSet<Transacao> Transacoes { get; set; }
+        public DbSet<Processo> Processos { get; set; }
+        public DbSet<Andamento> Andamentos { get; set; }
         public DbSet<Configuracao> Configuracoes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -31,10 +33,12 @@ namespace IndicaMais.DbContexts
             builder.Entity<Parceiro>().HasIndex("Telefone", "TenantId").IsUnique(true);
 
             builder.Entity<Usuario>().HasQueryFilter(u => u.Tenant.Id == CurrentTenantId).HasIndex("Email", "TenantId").IsUnique(true);
-            builder.Entity<Empresa>().HasQueryFilter(a => a.Tenant.Id == CurrentTenantId).HasIndex("TenantId").IsUnique(true);
-            builder.Entity<Premio>().HasQueryFilter(a => a.Tenant.Id == CurrentTenantId);
-            builder.Entity<Indicacao>().HasQueryFilter(a => a.Tenant.Id == CurrentTenantId).HasIndex("IndicadoId").IsUnique(true);
-            builder.Entity<Transacao>().HasQueryFilter(a => a.Tenant.Id == CurrentTenantId);
+            builder.Entity<Empresa>().HasQueryFilter(e => e.Tenant.Id == CurrentTenantId).HasIndex("TenantId").IsUnique(true);
+            builder.Entity<Premio>().HasQueryFilter(p => p.Tenant.Id == CurrentTenantId);
+            builder.Entity<Indicacao>().HasQueryFilter(i => i.Tenant.Id == CurrentTenantId).HasIndex("IndicadoId").IsUnique(true);
+            builder.Entity<Transacao>().HasQueryFilter(t => t.Tenant.Id == CurrentTenantId);
+            builder.Entity<Processo>().HasQueryFilter(p => p.Tenant.Id == CurrentTenantId).HasIndex("Numero", "TenantId").IsUnique(true);
+            builder.Entity<Andamento>().HasQueryFilter(a => a.Tenant.Id == CurrentTenantId);
             builder.Entity<Configuracao>().HasQueryFilter(c => c.Tenant.Id == CurrentTenantId).HasIndex("Chave", "TenantId").IsUnique(true);
 
             base.OnModelCreating(builder);

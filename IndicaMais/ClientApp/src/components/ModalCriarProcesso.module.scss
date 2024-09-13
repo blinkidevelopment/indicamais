@@ -1,0 +1,78 @@
+@import '../_colors.scss';
+
+.modal > div > div {
+    background-color: $corFundo;
+    color: $corFonteSecundaria;
+    border-color: $corFonteSecundaria;
+}
+
+.modal > div > div > div {
+    border-color: $corFonteSecundaria;
+}
+
+.invalido {
+    color: red;
+}
+
+.btresgatar {
+    background-color: $corPrimaria !important;
+}
+
+.btconfirmar {
+    background-color: $corSecundaria !important;
+    border-color: $corFonteSecundaria !important;
+    color: $corFonteSecundaria !important;
+    font-weight: bold !important;
+}
+
+p.mensagem {
+    font-weight: 600;
+    color: $corFonteSecundaria;
+    filter: opacity(0.7);
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+p.conversao {
+    color: $corFonteSecundaria;
+    margin-bottom: 0;
+    opacity: 0.8;
+}
+
+div.dados {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+div.dados p {
+    font-size: 23px;
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+div.dados input {
+    border: 0;
+    padding: 0 2px;
+    font-size: 18px;
+    width: 100%;
+    outline: none;
+    background: none;
+    border-bottom: 1px solid $corFonteSecundaria;
+    color: $corFonteSecundaria;
+}
+
+textarea.descricao{
+    width: 100%;
+    padding: 5px;
+}
+
+div.containerpremios {
+    display: grid;
+    gap: 10px;
+    overflow-y: auto;
+    min-height: 90px;
+    max-height: 200px;
+    height: 100%;
+}

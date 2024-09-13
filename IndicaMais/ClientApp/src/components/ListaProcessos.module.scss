@@ -1,0 +1,168 @@
+﻿@import '../_colors.scss';
+
+.aberto {
+    margin-top: -4px;
+    transform: rotate(180deg);
+}
+
+.desabilitado{
+    cursor: unset !important;
+    opacity: 40%;
+}
+
+div.processos {
+    padding: 30px 20px;
+    background: #939393;
+    border-radius: 15px;
+    margin: 0 10px 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+div.processos p {
+    color: $corFonteSecundaria;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 0;
+    width: fit-content;
+    cursor: pointer;
+    margin-top: -8px;
+}
+
+div.processos .colapsar {
+    width: 20px;
+    height: 20px;
+    margin-top: -2px;
+    transition: 0.5s ease;
+}
+
+div.processos .colapsar > * {
+    fill: $corFonteSecundaria;
+}
+
+div.processos img.icone {
+    position: absolute;
+    top: 50%;
+    right: 69px;
+    transform: translate(55%, -47%) rotate(-5deg);
+    width: 34%;
+    max-width: 132px;
+    opacity: 65%;
+}
+
+div.processos table {
+    border: 1px solid $corFonte;
+    width: 100%;
+    margin-top: 10px;
+    margin-right: 20px;
+    color: black;
+}
+
+div.processos table td, div.processos table th {
+    padding: 5px;
+}
+
+div.processos table td img {
+    width: 17px;
+}
+
+div.processos table thead {
+    color: $corFonte;
+    border: 1px solid $corFonte;
+}
+
+div.controles {
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-between;
+}
+
+div.controles div{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+div.controles p{
+    cursor: unset;
+}
+
+div.controles svg {
+    position: unset;
+    transform: none;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+div.controles svg > *{
+    fill: $corFonteSecundaria;
+}
+
+div.carregando {
+    display: flex;
+    justify-content: center;
+}
+
+div.carregando img{
+    width: 50px;
+}
+
+div.acordeao{
+    margin-top: 15px;
+}
+
+div.andamento p{
+    margin-bottom: 20px;
+    color: $corFonteSecundaria;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+div.containerandamento div.controles {
+    color: $corFonteSecundaria;
+    margin-top: 20px;
+    align-items: center;
+}
+
+div.containerandamento div.controles svg > * {
+    fill: $corFonteSecundaria;
+}
+
+div.containerandamento div.controles button{
+    border: 0;
+    border-radius: 15px;
+    background: $corPrimaria;
+    color: $corFonte;
+    padding: 8px 10px;
+}
+
+div.containerandamento div.controles div {
+    align-items: center;
+}
+
+div.containerandamento div.controles p{
+    margin-top: -3px;
+}
+
+div.containerandamento div.controles button:disabled {
+    opacity: 30%;
+}
+
+div.containerandamento p.avisoandamento {
+    font-weight: normal;
+    font-size: 15px;
+    opacity: 75%;
+    margin-top: 10px;
+}
+
+div.cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+div.cabecalho p{
+    opacity: 60%;
+}

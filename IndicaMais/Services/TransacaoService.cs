@@ -47,32 +47,41 @@ namespace IndicaMais.Services
             }
         }
 
-        public async Task<(IEnumerable<TransacaoParceiroMin> transacoes, bool temMais)> Listar(int pagina, int tamanho)
+        public async Task<(IEnumerable<TransacaoParceiroMin>? transacoes, bool temMais)> Listar(int pagina, int tamanho)
         {
             var user = await _userManager.GetUserAsync(_signInManager.Context.User);
-            var parceiro = await _context.Parceiros.FirstOrDefaultAsync(p => p.User.Id == user.Id);
 
-            int total = await _context.Transacoes.CountAsync(t => t.Parceiro.Id == parceiro.Id);
+            if (user != null)
+            {
+                var parceiro = await _context.Parceiros.FirstOrDefaultAsync(p => p.User.Id == user.Id);
 
-            var transacoes = await _context.Transacoes
-                .Where(t => t.Parceiro.Id == parceiro.Id)
-                .Skip((pagina - 1) * tamanho)
-                .Take(tamanho)
-                .Select(t => new TransacaoParceiroMin
+                if (parceiro != null)
                 {
-                    Data = t.Data,
-                    Valor = t.Valor,
-                    Tipo = t.Tipo,
-                    NomePremio = _context.Premios
-                        .Where(p => p.Id == t.Premio.Id)
-                        .Select(p => p.Nome)
-                        .FirstOrDefault()
-                })
-                .ToListAsync();
+                    int total = await _context.Transacoes.CountAsync(t => t.Parceiro.Id == parceiro.Id);
 
-            bool temMais = (pagina * tamanho) < total;
+                    var transacoes = await _context.Transacoes
+                        .Where(t => t.Parceiro.Id == parceiro.Id)
+                        .Skip((pagina - 1) * tamanho)
+                        .Take(tamanho)
+                        .Select(t => new TransacaoParceiroMin
+                        {
+                            Data = t.Data,
+                            Valor = t.Valor,
+                            Tipo = t.Tipo,
+                            NomePremio = _context.Premios
+                                .Where(p => p.Id == t.Premio.Id)
+                                .Select(p => p.Nome)
+                                .FirstOrDefault()
+                        })
+                        .ToListAsync();
 
-            return (transacoes, temMais);
+                    bool temMais = (pagina * tamanho) < total;
+
+                    return (transacoes, temMais);
+                }
+            }
+
+            return (null, false);
         }
 
         public async Task<(IEnumerable<TransacaoMin> transacoes, bool temMais)> Listar(int id, int pagina, int tamanho)

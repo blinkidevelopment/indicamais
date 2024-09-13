@@ -13,6 +13,7 @@ import UsersPage from "./paginas/UsersPage";
 import PrivacyPolicyPage from "./paginas/PrivacyPolicyPage";
 import NewPartnerPage from "./paginas/NewPartnerPage";
 import DataPage from "./paginas/DataPage";
+import ProcessesPage from "./paginas/ProcessesPage";
 
 const AppRoutes = () => {
     return (
@@ -31,6 +32,7 @@ const AppRoutes = () => {
                 <Route path="configuracoes" element={<SettingsPage />} />
                 <Route path="premios" element={<GiftsPage />} />
                 <Route path="usuarios" element={<UsersPage />} />
+                <Route path="processos" element={<ProcessesPage />} />
             </Route>
         </Routes>
     );

@@ -1,0 +1,236 @@
+﻿@import '../_colors.scss';
+
+.desabilitado {
+    cursor: unset !important;
+    opacity: 40%;
+}
+
+.statusparceiro{
+    font-size: 18px;
+    margin-bottom: 18px;
+}
+
+div.dados {
+    background: $corSecundaria;
+    width: 60%;
+    text-align: center;
+    color: $corFonteSecundaria;
+    overflow-y: auto;
+}
+
+div.dados p.fechar{
+    text-align: right;
+    font-size: 28px;
+    padding: 5px 10px;
+    margin-bottom: -4px;
+}
+
+div.dados p.fechar > *{
+    cursor: pointer;
+}
+
+div.dados hr{
+    margin: 8% 10%;
+    color: $corFonteSecundaria;
+    opacity: 0.75;
+}
+
+div.nome p.iconeconta{
+    font-size: 120px;
+    margin-bottom: -10px;
+    color: $corPrimaria;
+}
+
+div.nome h2{
+    font-weight: bold;
+}
+
+
+div.botoes{
+    margin-top: 12px;
+}
+
+button.excluirprocesso{
+    border: 0;
+    border-radius: 20px;
+    color: white;
+    background: red;
+    padding: 5px 10px
+}
+
+div.informacoes {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    justify-content: center;
+}
+
+div.informacoes p{
+    margin: 0;
+}
+
+div.informacoes input{
+    background: none;
+    border: 0;
+    width: 119px;
+    text-align: center;
+    color: unset;
+    cursor: text;
+}
+
+div.containertabela{
+    overflow-x: auto;
+    width: 100%;
+}
+
+div.andamentos p {
+    font-size: 28px;
+}
+
+div.andamentos table {
+    width: 90%;
+    margin: 0 auto;
+    color: black;
+}
+
+div.andamentos table thead {
+    background: $corTerciaria;
+    color: $corFonte;
+}
+
+div.andamentos table input[type=checkbox]{
+    width: 16px;
+    cursor: default;
+}
+
+div.andamentos table tbody tr {
+    background: #fafafa;
+    padding: 5px;
+}
+
+div.andamentos table tbody tr:nth-child(odd) {
+    background: #e5e5e5;
+}
+
+div.andamentos table tbody tr td{
+    padding: 5px;
+}
+
+div.andamentos table td img{
+    width: 17px;
+}
+
+div.andamentos table input{
+    text-align: center;
+    border: 0;
+    background: 0;
+    color: unset;
+    width: 140px;
+    cursor: text;
+}
+
+p.premioresgatado {
+    color: black !important;
+    font-weight: normal !important;
+    font-size: 16px !important;
+    cursor: unset !important;
+    margin-bottom: 0;
+}
+
+div.controles {
+    display: flex;
+    margin: 0 auto;
+    justify-content: space-between;
+    width: 90%;
+}
+
+div.controles div{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+div.controles p{
+    cursor: unset;
+    margin-bottom: 3px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+div.controles svg {
+    position: unset;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+div.controles svg > * {
+    fill: $corFonteSecundaria;
+}
+
+div.statuscontrato {
+    margin: 14px 0;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+div.statuscontrato p{
+    font-size: 17px;
+    font-weight: bold;
+    margin: 0;
+}
+
+div.statuscontrato p.contratofechado {
+    color: green;
+}
+
+div.statuscontrato p.contratoaberto {
+    color: red;
+}
+
+button.botaostatus {
+    border: 0;
+    background: $corTerciaria;
+    color: $corFonte;
+    padding: 7px 10px;
+    border-radius: 20px;
+}
+
+button.botaostatus:hover{
+    background: #160090;
+    transition: 0.6s;
+}
+
+td.addandamento{
+}
+
+td.addandamento textarea{
+    width: 100%;
+    border: 0;
+    padding: 5px;
+}
+
+td.addandamento button{
+    border: 1px solid black;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+p.avisoandamento {
+    font-size: 18px !important;
+    background: red;
+    margin-left: 40px;
+    margin-right: 40px;
+    border-radius: 20px;
+    color: white;
+    padding: 5px;
+}
+
+.excluir{
+    color: red;
+    cursor: pointer;
+}

@@ -31,7 +31,6 @@ function ModalAbater(props) {
         if (valorSaldoResgate >= 10 && valorSaldoResgate <= props.saldo) {
             setMensagem(null);
 
-            //var resposta = await fetch.criarTransacao(props.usuario, valorSaldoResgate, 1, null);
             var resposta = await fetch.criarTransacao(valorSaldoResgate);
             if (resposta) {
                 setConcluido(true);

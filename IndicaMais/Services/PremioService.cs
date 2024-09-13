@@ -91,7 +91,7 @@ namespace IndicaMais.Services
             }
         }
 
-        public async Task<bool> Editar(int id, EditarPremioRequest request)
+        public async Task<bool> Editar(EditarPremioRequest request, int id)
         {
             var premio = _context.Premios.FirstOrDefault(p => p.Id == id);
 

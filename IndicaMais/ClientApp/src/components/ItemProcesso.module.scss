@@ -1,0 +1,31 @@
+@import '../_colors.scss';
+
+div.processo{
+    border: 1px solid black;
+    width: 100%;
+    min-width: 200px;
+    max-width: 300px;
+    padding: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    background: #979797;
+}
+
+div.processo h3{
+    font-size: 20px;
+}
+
+div.processo p{
+    margin-bottom: 0;
+}
+
+div.processo p.descricao{
+    margin-top: 10px;
+}
+
+input.cpf {
+    background: none;
+    border: 0;
+    width: 111px;
+    color: black;
+}

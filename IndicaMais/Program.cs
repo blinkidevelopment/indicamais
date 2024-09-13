@@ -77,6 +77,7 @@ builder.Services.AddTransient<IEmpresaService, EmpresaService>();
 builder.Services.AddTransient<IPremioService, PremioService>();
 builder.Services.AddTransient<ITransacaoService, TransacaoService>();
 builder.Services.AddTransient<IUsuarioService, UsuarioService>();
+builder.Services.AddTransient<IProcessoService, ProcessoService>();
 builder.Services.AddScoped<ICurrentTenantService, CurrentTenantService>();
 
 builder.Services.AddControllersWithViews();

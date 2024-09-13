@@ -121,13 +121,28 @@ namespace IndicaMais.Services
                     Telefone = p.Telefone,
                     Credito = p.Credito,
                     Tipo = p.Tipo,
-                    IndicadoPor = _context.Indicacao
+                    IndicadoPor = _context.Indicacoes
                         .Where(i => i.Indicado.Id == p.Id)
                         .Select(i => i.Parceiro.Nome)
                         .FirstOrDefault(),
                     Fechou = p.Fechou
                 })
                 .FirstOrDefaultAsync();
+
+            return parceiro;
+        }
+
+        public async Task<IEnumerable<ParceiroSimp>> BuscarNome(string nome)
+        {
+            var parceiro = await _context.Parceiros
+                .Where(p => p.Nome.StartsWith(nome.ToUpper()))
+                .Select(p => new ParceiroSimp
+                {
+                    Id = p.Id,
+                    Nome = p.Nome,
+                    Cpf = p.Cpf
+                })
+                .ToListAsync();
 
             return parceiro;
         }
@@ -166,11 +181,11 @@ namespace IndicaMais.Services
             {
                 if (indicado.Value)
                 {
-                    query = query.Where(p => _context.Indicacao.Any(i => i.Indicado.Id == p.Id));
+                    query = query.Where(p => _context.Indicacoes.Any(i => i.Indicado.Id == p.Id));
                 }
                 else
                 {
-                    query = query.Where(p => !_context.Indicacao.Any(i => i.Indicado.Id == p.Id));
+                    query = query.Where(p => !_context.Indicacoes.Any(i => i.Indicado.Id == p.Id));
                 }
             }
 
@@ -292,7 +307,7 @@ namespace IndicaMais.Services
                     Indicado = indicado
                 };
 
-                _context.Indicacao.Add(indicacao);
+                _context.Indicacoes.Add(indicacao);
                 await _context.SaveChangesAsync();
 
                 return true;
@@ -308,9 +323,9 @@ namespace IndicaMais.Services
             var user = await _userManager.GetUserAsync(_signInManager.Context.User);
             var parceiro = await _context.Parceiros.FirstOrDefaultAsync(p => p.User.Id == user.Id);
 
-            int total = await _context.Indicacao.CountAsync(i => i.Parceiro.Id == parceiro.Id);
+            int total = await _context.Indicacoes.CountAsync(i => i.Parceiro.Id == parceiro.Id);
 
-            var indicacoes = await _context.Indicacao
+            var indicacoes = await _context.Indicacoes
                 .Where(i => i.Parceiro.Id == parceiro.Id)
                 .Select(i => new IndicadoMin
                 {
@@ -331,9 +346,9 @@ namespace IndicaMais.Services
         {
             var parceiro = await _context.Parceiros.FirstOrDefaultAsync(p => p.Id == id);
 
-            int total = await _context.Indicacao.CountAsync(i => i.Parceiro.Id == parceiro.Id);
+            int total = await _context.Indicacoes.CountAsync(i => i.Parceiro.Id == parceiro.Id);
 
-            var indicacoes = await _context.Indicacao
+            var indicacoes = await _context.Indicacoes
                 .Where(i => i.Parceiro.Id == parceiro.Id)
                 .Select(i => new Indicado
                 {
@@ -369,7 +384,7 @@ namespace IndicaMais.Services
 
             if (parceiro != null)
             {
-                var query = _context.Indicacao.Where(i => i.Parceiro.Id == parceiro.Id);
+                var query = _context.Indicacoes.Where(i => i.Parceiro.Id == parceiro.Id);
 
                 if (fechadas)
                 {
@@ -390,7 +405,7 @@ namespace IndicaMais.Services
 
             if (parceiro != null)
             {
-                var query = _context.Indicacao.Where(i => i.Parceiro.Id == parceiro.Id);
+                var query = _context.Indicacoes.Where(i => i.Parceiro.Id == parceiro.Id);
 
                 if (fechadas)
                 {
@@ -407,7 +422,7 @@ namespace IndicaMais.Services
 
         public async Task<int> ContarTodasIndicacoes(bool fechadas, DateTime? dataInicial, DateTime? dataFinal)
         {
-            var query = _context.Indicacao.AsQueryable();
+            var query = _context.Indicacoes.AsQueryable();
 
             if (fechadas)
             {
@@ -458,7 +473,7 @@ namespace IndicaMais.Services
             return totalInd;
         }
 
-        public async Task<bool> AlterarSenha(int id, AlterarSenhaRequest request)
+        public async Task<bool> AlterarSenha(AlterarSenhaRequest request, int id)
         {
             if (request.Senha == request.Confirmacao)
             {
@@ -499,7 +514,7 @@ namespace IndicaMais.Services
                         parceiro.FechouEm = DateTime.UtcNow;
                         _context.Parceiros.Update(parceiro);
 
-                        var indicador = await _context.Indicacao
+                        var indicador = await _context.Indicacoes
                             .Where(i => i.Indicado.Id == parceiro.Id)
                             .Select(i => i.Parceiro)
                             .FirstOrDefaultAsync();
@@ -658,11 +673,11 @@ namespace IndicaMais.Services
             {
                 if (request.FoiIndicado.Value)
                 {
-                    query = query.Where(p => _context.Indicacao.Any(i => i.Indicado.Id == p.Id));
+                    query = query.Where(p => _context.Indicacoes.Any(i => i.Indicado.Id == p.Id));
                 }
                 else
                 {
-                    query = query.Where(p => !_context.Indicacao.Any(i => i.Indicado.Id == p.Id));
+                    query = query.Where(p => !_context.Indicacoes.Any(i => i.Indicado.Id == p.Id));
                 }
             }
 
@@ -726,7 +741,7 @@ namespace IndicaMais.Services
 
         public async Task<byte[]?> GerarRelacaoIndicadorIndicado()
         {
-            var indicacoes = await _context.Indicacao
+            var indicacoes = await _context.Indicacoes
                 .Include(i => i.Indicado)
                 .Include(i => i.Parceiro)
                 .ToListAsync();

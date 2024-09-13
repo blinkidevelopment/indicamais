@@ -9,6 +9,7 @@ namespace IndicaMais.Services
         Task<Parceiro> Buscar();
         Task<Parceiro> Buscar(string cpf);
         Task<ParceiroMin> Buscar(int id);
+        Task<IEnumerable<ParceiroSimp>> BuscarNome(string nome);
         Task<(IEnumerable<Parceiro> parceiros, bool temMais)> Listar(int pagina, int tamanho, string? nome, string? cpf, int? tipo, bool? fechou, bool? indicado);
         Task<bool> Criar(CriarParceiroRequest request);
         Task<bool> Criar(CriarParceiroInternamenteRequest request);
@@ -22,7 +23,7 @@ namespace IndicaMais.Services
         Task<int> ContarIndicacoes(int id, bool fechadas);
         Task<int> ContarTodasIndicacoes(bool fechadas, DateTime? dataInicial, DateTime? dataFinal);
         Task<bool> Editar(EditarParceiroRequest request);
-        Task<bool> AlterarSenha(int id, AlterarSenhaRequest request);
+        Task<bool> AlterarSenha(AlterarSenhaRequest request, int id);
         Task<bool> AlterarStatus(int id);
         Task<bool> AlterarStatusRepasse(int id);
         Task<bool> AtualizarIndicado(AtualizarIndicadoRequest request, string telefone);

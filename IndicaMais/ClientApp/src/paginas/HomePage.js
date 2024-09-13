@@ -7,6 +7,7 @@ import ModalIndicar from '../components/ModalIndicar';
 import ListaIndicacoes from '../components/ListaIndicacoes';
 import ListaTransacoes from '../components/ListaTransacoes';
 import ListaCobrancas from '../components/ListaCobrancas';
+import ListaProcessos from '../components/ListaProcessos';
 import { faRightFromBracket, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
@@ -128,8 +129,9 @@ function HomePage() {
             </div>
             <div className={style.listas}>
                 <ListaIndicacoes usuario={usuario} />
-                {usuario ? usuario.tipo == 0 ? <ListaTransacoes /> : "" : ""}
+                {usuario ? usuario.tipo === 0 ? <ListaTransacoes /> : "" : ""}
                 {usuario ? usuario.tipo === 0 ? <ListaCobrancas /> : "" : ""}
+                {usuario ? usuario.tipo === 0 ? <ListaProcessos /> : "" : ""}
             </div>
             {usuario ?
                 <>

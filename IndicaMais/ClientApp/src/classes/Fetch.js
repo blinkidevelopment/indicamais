@@ -48,6 +48,22 @@
         return resposta;
     }
 
+    async buscarParceirosNome(nome) {
+        var resposta;
+
+        try {
+            await fetch('api/parceiro/buscar/' + nome, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
     async buscarUsuario() {
         var resposta;
 
@@ -271,7 +287,6 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    //parceiro: parceiro,
                     nome: nome,
                     telefone: celular
                 })
@@ -448,6 +463,142 @@
         try {
             await fetch('api/parceiro/listar?nome=' + nome + '&cpf=' + cpf + '&tipo=' + tipo + '&fechou=' + fechou + '&indicado=' + foiIndicado + '&pagina=' + pagina + '&tamanho=' + tamPagina, {
                 method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
+    async criarProcesso(idParceiro, numero, nome, descricao) {
+        var resposta;
+
+        try {
+            await fetch('api/parceiro/' + idParceiro + '/processo', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    numero: numero,
+                    nome: nome,
+                    descricao: descricao
+                })
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
+    async listarProcessosParceiro(pagina) {
+        var resposta;
+
+        try {
+            await fetch('api/parceiro/processos?pagina=' + pagina + "&tamanho=5", {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
+    async buscarDadosProcesso(id) {
+        var resposta;
+
+        try {
+            await fetch('api/processo/' + id, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
+    async excluirProcesso(id) {
+        var resposta;
+
+        try {
+            await fetch('api/processo/' + id, {
+                method: 'delete',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
+    async listarAndamentos(id, pagina, tamanho) {
+        var resposta;
+
+        try {
+            await fetch('api/processo/' + id + '/andamentos?pagina=' + pagina + '&tamanho=' + tamanho, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
+    async adicionarAndamento(id, descricao) {
+        var resposta;
+
+        try {
+            await fetch('api/processo/' + id + '/andamento', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    descricao: descricao
+                })
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
+    async pedirAndamento(id) {
+        var resposta;
+
+        try {
+            await fetch('api/processo/' + id + '/andamento/solicitar', {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
+    async excluirAndamento(id, idAndamento) {
+        var resposta;
+
+        try {
+            await fetch('api/processo/' + id + '/andamento/' + idAndamento, {
+                method: 'post',
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -717,6 +868,24 @@
 
         try {
             await fetch('api/premio', {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => response.json()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
+    async listarProcessos(pagina, tamanho, nomeParceiro, cpf, nomeProcesso, numeroProcesso, pendenteAndamento) {
+        var resposta;
+
+        pendenteAndamento = pendenteAndamento === "" ? null : (pendenteAndamento === "true");
+
+        try {
+            await fetch('api/processo/listar?nomeParceiro=' + nomeParceiro + '&cpf=' + cpf + '&nomeProcesso=' + nomeProcesso + '&numeroProcesso=' + numeroProcesso + '&pendenteAndamento=' + pendenteAndamento + '&pagina=' + pagina + '&tamanho=' + tamanho, {
                 method: 'get',
                 headers: {
                     'Content-Type': 'application/json'

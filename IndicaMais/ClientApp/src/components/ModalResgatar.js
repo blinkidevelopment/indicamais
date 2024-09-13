@@ -84,8 +84,8 @@ function ModalResgatar(props) {
 
     async function resgatarPremio() {
         if (idPremioSelecionado !== 0) {
-            //var resposta = await fetch.criarTransacao(props.usuario, 0, 2, idPremioSelecionado);
             var resposta = await fetch.resgatarPremio(idPremioSelecionado);
+
             if (resposta) {
                 setStatus({
                     concluido: true,

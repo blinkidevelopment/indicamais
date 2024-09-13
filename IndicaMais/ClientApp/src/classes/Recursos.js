@@ -10,6 +10,7 @@ import remover_filtro from '../imagens/remover-filtro.svg';
 import aplicar_filtro from '../imagens/aplicar-filtro.svg';
 import logout from '../imagens/logout.svg';
 import cobranca from '../imagens/cobranca.svg';
+import processo from '../imagens/processo.svg';
 import { ReactComponent as LMRLogo } from '../imagens/lmr-logo.svg';
 import { ReactComponent as LMRLogoVazado } from '../imagens/lmr-logo-vazado.svg';
 import { ReactComponent as ContaIcone } from '../imagens/conta.svg';
@@ -37,6 +38,10 @@ class Recursos {
 
     getIndicacoes() {
         return indicacoes;
+    }
+
+    getProcesso() {
+        return processo;
     }
 
     getIndicar() {

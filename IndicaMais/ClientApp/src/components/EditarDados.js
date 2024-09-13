@@ -26,7 +26,6 @@ function EditarDados({ id }) {
 
     useEffect(() => {
         const buscarDados = async () => {
-            //var dados = await fetch.buscarParceiro(id);
             var dados = await fetch.buscarUsuario();
             setParceiro(dados);
         }

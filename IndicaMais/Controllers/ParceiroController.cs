@@ -14,11 +14,13 @@ namespace IndicaMais.Controllers
     {
         private readonly IParceiroService _parceiroService;
         private readonly ITransacaoService _transacaoService;
+        private readonly IProcessoService _processoService;
 
-        public ParceiroController(IParceiroService parceiroService, ITransacaoService transacaoService)
+        public ParceiroController(IParceiroService parceiroService, ITransacaoService transacaoService, IProcessoService processoService)
         {
             _parceiroService = parceiroService;
             _transacaoService = transacaoService;
+            _processoService = processoService;
         }
 
         [HttpGet]
@@ -33,6 +35,14 @@ namespace IndicaMais.Controllers
         public async Task<IActionResult> Buscar(int id)
         {
             var parceiro = await _parceiroService.Buscar(id);
+            return Ok(parceiro);
+        }
+
+        [Authorize(Roles = "Admin,Gestor")]
+        [HttpGet("buscar/{nome}")]
+        public async Task<IActionResult> BuscarNome(string nome)
+        {
+            var parceiro = await _parceiroService.BuscarNome(nome);
             return Ok(parceiro);
         }
 
@@ -138,6 +148,13 @@ namespace IndicaMais.Controllers
             return Ok(result);
         }
 
+        [HttpGet("processos")]
+        public async Task<IActionResult> ListarProcessos([FromQuery] int pagina, int tamanho)
+        {
+            var result = await _processoService.Listar(pagina, tamanho);
+            return Ok(new { result.processos, result.temMais });
+        }
+
         [HttpDelete]
         public async Task<IActionResult> Excluir()
         {
@@ -173,7 +190,7 @@ namespace IndicaMais.Controllers
         [HttpPatch("{id}/alterar-senha")]
         public async Task<IActionResult> AlterarSenha(AlterarSenhaRequest request, int id)
         {
-            var result = await _parceiroService.AlterarSenha(id, request);
+            var result = await _parceiroService.AlterarSenha(request, id);
             return Ok(result);
         }
 
@@ -190,6 +207,14 @@ namespace IndicaMais.Controllers
         public async Task<IActionResult> AlterarStatusRepasse(int id)
         {
             var result = await _parceiroService.AlterarStatusRepasse(id);
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "Admin,Gestor")]
+        [HttpPost("{id}/processo")]
+        public async Task<IActionResult> CriarProcesso(CriarProcessoRequest request, int id)
+        {
+            var result = await _processoService.Criar(request, id);
             return Ok(result);
         }
 

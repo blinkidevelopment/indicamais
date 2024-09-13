@@ -2,16 +2,17 @@
 
 namespace IndicaMais.Models
 {
-    public class Indicacao : IMustHaveTenant
+    public class Andamento : IMustHaveTenant
     {
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        public Parceiro Parceiro { get; set; }
+        public string Descricao { get; set; }
+
+        public DateTime Data { get; set; } = DateTime.UtcNow;
 
         [Required]
-        public Parceiro Indicado { get; set; }
+        public Processo Processo { get; set; }
 
         [Required]
         public Tenant Tenant { get; set; }

@@ -51,7 +51,7 @@ namespace IndicaMais.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> Editar(EditarPremioRequest request, int id)
         {
-            var result = await _premioService.Editar(id, request);
+            var result = await _premioService.Editar(request, id);
             return Ok(result);
         }
 

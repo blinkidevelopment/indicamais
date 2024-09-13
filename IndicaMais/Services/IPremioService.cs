@@ -9,7 +9,7 @@ namespace IndicaMais.Services
         Task<IEnumerable<Premio>> Listar();
         Task<IEnumerable<Premio>> ListarPremiosDisponiveis();
         Task<bool> Resgatar(int id);
-        Task<bool> Editar(int id, EditarPremioRequest request);
+        Task<bool> Editar(EditarPremioRequest request, int id);
         Task<bool> Excluir(int id);
     }
 }
