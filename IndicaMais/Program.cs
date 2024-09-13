@@ -12,20 +12,10 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-    .AddCookie(options =>
-    {
-        options.Cookie.Name = "Authorization";
-        options.Cookie.Expiration = TimeSpan.FromHours(1);
-    })
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidIssuer = Parametros.Issuer,
             ValidAudience = Parametros.Audience,
@@ -35,23 +25,7 @@ builder.Services.AddAuthentication(options =>
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true
         };
-        options.Events = new JwtBearerEvents
-        {
-            OnMessageReceived = context =>
-            {
-                context.Token = context.Request.Cookies["Authorization"];
-                return Task.CompletedTask;
-            }
-        };
     });
-
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("Admin", p =>
-    {
-        p.RequireClaim("admin", "True");
-    });
-});
 
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseMySql(Parametros.CodConexao, ServerVersion.AutoDetect(Parametros.CodConexao)));
