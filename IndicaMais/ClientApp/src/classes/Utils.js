@@ -67,8 +67,10 @@ class Utils {
     }
 
     formatarData(data) {
-        var dataObj = new Date(data + " UTC");
-        return dataObj.toLocaleDateString() + " às " + dataObj.toLocaleTimeString();
+        var dataObj = new Date(data + 'Z');
+        return dataObj.toLocaleDateString(undefined) +
+            " às " +
+            dataObj.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     }
 
     transformarCor(cor, tom, saturacao, luminosidade) {

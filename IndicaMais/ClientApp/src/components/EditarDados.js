@@ -7,7 +7,7 @@ import { faPencil, faTrash, faCheck, faFloppyDisk, faCircleCheck, faCircleXmark,
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ModalConfirmacao from './ModalConfirmacao';
 
-function EditarDados({ id }) {
+function EditarDados() {
     const fetch = new Fetch();
     const utils = new Utils();
     const [exibirModal, setExibirModal] = useState(false);
@@ -26,11 +26,11 @@ function EditarDados({ id }) {
 
     useEffect(() => {
         const buscarDados = async () => {
-            var dados = await fetch.buscarUsuario();
+            var dados = await fetch.buscarParceiro();
             setParceiro(dados);
         }
         buscarDados();
-    }, [id]);
+    }, []);
 
     useEffect(() => {
         if (senha) {
