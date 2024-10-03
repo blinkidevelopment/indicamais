@@ -22,6 +22,15 @@ p.mensagem {
     font-size: 14px;
 }
 
+p.mensagemcodigo {
+    font-weight: 600;
+    color: $corFonteSecundaria;
+    filter: opacity(0.7);
+    margin-bottom: 0;
+    font-size: 18px;
+    text-align: center;
+}
+
 div.dados {
     display: grid;
 }
@@ -42,4 +51,40 @@ div.dados input {
 
 div.dados input::placeholder{
     color: $corFonteSecundaria;
+}
+
+p.gerarlink{
+    color: $corFonte;
+    margin-top: -5px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    background: $corPrimaria;
+    padding: 5px;
+    text-align: center;
+    border-radius: 20px;
+}
+
+div.containerqrcode {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+div.qrcode {
+    background: white;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+div.qrcode .codigo{
+    width: 88%;
+}
+
+p.copiarlink{
+    text-decoration: underline;
+    font-size: 18px;
+    text-align: center;
+    color: $corFonteSecundaria;
+    cursor: pointer;
 }

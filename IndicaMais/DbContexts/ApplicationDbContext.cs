@@ -31,6 +31,7 @@ namespace IndicaMais.DbContexts
             builder.Entity<Parceiro>().HasQueryFilter(a => a.Tenant.Id == CurrentTenantId);
             builder.Entity<Parceiro>().HasIndex("Cpf", "TenantId").IsUnique(true);
             builder.Entity<Parceiro>().HasIndex("Telefone", "TenantId").IsUnique(true);
+            builder.Entity<Parceiro>().HasIndex("CodigoIndicacao").IsUnique(true);
 
             builder.Entity<Usuario>().HasQueryFilter(u => u.Tenant.Id == CurrentTenantId).HasIndex("Email", "TenantId").IsUnique(true);
             builder.Entity<Empresa>().HasQueryFilter(e => e.Tenant.Id == CurrentTenantId).HasIndex("TenantId").IsUnique(true);

@@ -157,7 +157,7 @@ function HomePage() {
                     <ModalIndicar
                         show={modalIndicarShow}
                         onHide={() => setModalIndicarShow(false)}
-                        idParceiro={usuario.id}
+                        codigoIndicacao={usuario.codigoIndicacao}
                     />
                 </>
             : ""}

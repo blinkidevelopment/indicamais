@@ -147,6 +147,16 @@ namespace IndicaMais.Services
             return parceiro;
         }
 
+        public async Task<string> BuscarNomeCodigo(string codigoIndicacao)
+        {
+            var nome = await _context.Parceiros
+                .Where(p => p.CodigoIndicacao.ToString() == codigoIndicacao)
+                .Select(p => p.Nome)
+                .FirstOrDefaultAsync();
+
+            return nome;
+        }
+
         public async Task<Parceiro> Buscar()
         {
             var user = await _userManager.GetUserAsync(_signInManager.Context.User);
@@ -300,6 +310,38 @@ namespace IndicaMais.Services
 
                 var user = await _userManager.GetUserAsync(_signInManager.Context.User);
                 var parceiro = await _context.Parceiros.FirstOrDefaultAsync(p => p.User.Id == user.Id);
+
+                var indicacao = new Models.Indicacao
+                {
+                    Parceiro = parceiro,
+                    Indicado = indicado
+                };
+
+                _context.Indicacoes.Add(indicacao);
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> CriarIndicacao(CriarIndicacaoRequest request, string codigoIndicacao)
+        {
+            try
+            {
+                var indicado = new Parceiro
+                {
+                    Nome = request.Nome,
+                    Telefone = request.Telefone
+                };
+
+                _context.Parceiros.Add(indicado);
+                await _context.SaveChangesAsync();
+
+                var parceiro = await _context.Parceiros.FirstOrDefaultAsync(p => p.CodigoIndicacao.ToString() == codigoIndicacao);
 
                 var indicacao = new Models.Indicacao
                 {

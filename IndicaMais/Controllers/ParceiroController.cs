@@ -47,6 +47,14 @@ namespace IndicaMais.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("{codigoIndicacao}/nome")]
+        public async Task<IActionResult> BuscarNomeCodigo(string codigoIndicacao)
+        {
+            string nome = await _parceiroService.BuscarNomeCodigo(codigoIndicacao);
+            return Ok(nome);
+        }
+
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Criar(CriarParceiroRequest request)
         {
@@ -101,6 +109,14 @@ namespace IndicaMais.Controllers
         public async Task<IActionResult> Indicar(CriarIndicacaoRequest request)
         {
             var result = await _parceiroService.CriarIndicacao(request);
+            return result ? Ok(true) : Conflict();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("indicar/{codigoIndicacao}")]
+        public async Task<IActionResult> Indicar(CriarIndicacaoRequest request, string codigoIndicacao)
+        {
+            var result = await _parceiroService.CriarIndicacao(request, codigoIndicacao);
             return result ? Ok(true) : Conflict();
         }
 

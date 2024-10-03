@@ -10,12 +10,14 @@ namespace IndicaMais.Services
         Task<Parceiro> Buscar(string cpf);
         Task<ParceiroMin> Buscar(int id);
         Task<IEnumerable<ParceiroSimp>> BuscarNome(string nome);
+        Task<string> BuscarNomeCodigo(string codigoIndicacao);
         Task<(IEnumerable<Parceiro> parceiros, bool temMais)> Listar(int pagina, int tamanho, string? nome, string? cpf, int? tipo, bool? fechou, bool? indicado);
         Task<bool> Criar(CriarParceiroRequest request);
         Task<bool> Criar(CriarParceiroInternamenteRequest request);
         Task<(bool statusCRM, bool status)> ChecarExistencia(string cpf);
         Task<bool?> ChecarExistenciaIndicado(string telefone);
         Task<bool> CriarIndicacao(CriarIndicacaoRequest request);
+        Task<bool> CriarIndicacao(CriarIndicacaoRequest request, string codigoIndicacao);
         Task<(IEnumerable<IndicadoMin> indicacoes, bool temMais)> ListarIndicacoes(int pagina, int tamanho);
         Task<(IEnumerable<Indicado> indicacoes, bool temMais)> ListarIndicacoes(int id, int pagina, int tamanho);
         Task<RespostaAPI> ListarCobrancas(int pagina);

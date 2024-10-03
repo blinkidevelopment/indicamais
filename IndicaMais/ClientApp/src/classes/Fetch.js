@@ -64,6 +64,22 @@
         return resposta;
     }
 
+    async buscarNomeCodigo(codigoIndicacao) {
+        var resposta;
+
+        try {
+            await fetch('api/parceiro/' + codigoIndicacao + '/nome', {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => response.text()).then((data) => { resposta = data });
+        } catch {
+            resposta = null;
+        }
+        return resposta;
+    }
+
     async buscarUsuario() {
         var resposta;
 
@@ -277,11 +293,31 @@
         return resposta;
     }
 
-    async criarIndicacao(parceiro, nome, celular) {
+    async criarIndicacao(nome, celular) {
         var response;
 
         try {
             response = await fetch('api/parceiro/indicar', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome: nome,
+                    telefone: celular
+                })
+            });
+        } catch {
+            response = null;
+        }
+        return response;
+    }
+
+    async criarIndicacaoCodigo(nome, celular, codigoIndicacao) {
+        var response;
+
+        try {
+            response = await fetch('api/parceiro/indicar/' + codigoIndicacao, {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json'

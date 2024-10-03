@@ -1,6 +1,7 @@
 import HomePage from "./paginas/HomePage";
 import Login from "./components/Login";
 import Cadastro from "./components/Cadastro";
+import CadastroIndicado from "./components/CadastroIndicado";
 import RecuperarSenha from "./components/RecuperarSenha";
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import PrivateRoute from "./paginas/PrivateRoute";
@@ -15,6 +16,10 @@ import NewPartnerPage from "./paginas/NewPartnerPage";
 import DataPage from "./paginas/DataPage";
 import ProcessesPage from "./paginas/ProcessesPage";
 
+export async function loader({ params }) {
+    return params;
+}
+
 const AppRoutes = () => {
     return (
         <Routes>
@@ -22,6 +27,7 @@ const AppRoutes = () => {
                 <Route index path="" element={<HomePage />} />
                 <Route path="editar-dados" element={<EditarDados />} />
             </Route>
+            <Route path="/indicar/:id" loader={loader} element={<CadastroIndicado />} />
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/recuperar" element={<RecuperarSenha />} />
             <Route path="politica-de-privacidade" element={<PrivacyPolicyPage />} />

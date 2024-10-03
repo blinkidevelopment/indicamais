@@ -33,9 +33,11 @@ namespace IndicaMais.Models
 
         public DateTime? FechouEm { get; set; }
 
+        public Guid CodigoIndicacao { get; set; } = Guid.NewGuid();
+
         [Required]
         public Tenant Tenant { get; set; }
 
-        public Usuario User { get; set; }
+        public Usuario? User { get; set; }
     }
 }
