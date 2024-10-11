@@ -19,7 +19,7 @@ O projeto está em funcionamento e passando por constantes evoluções e melhori
 ### Tecnologias utilizadas
 - Backend: ASP.NET Core 8 (C#), Entity Framework;
 - Frontend: React;
-- Banco de Dados: SQL Server (ou outro banco compatível com Entity Framework);
+- Banco de Dados: MySQL;
 - Arquitetura: Multi-tenant.
 
 ## Produção
