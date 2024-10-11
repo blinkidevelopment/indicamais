@@ -17,13 +17,13 @@ A primeira empresa a adotar a plataforma é a [LMR Advogados Associados](https:/
 O projeto está em funcionamento e passando por constantes evoluções e melhorias.
 
 ### Tecnologias utilizadas
-- Backend: ASP.NET Core 8 (C#), Entity Framework;
+- Backend: ASP.NET Core 8 (C#);
 - Frontend: React;
-- Banco de Dados: MySQL;
+- Banco de Dados: MySQL, Entity Framework;
 - Arquitetura: Multi-tenant.
 
 ## Produção
-[Acesse a aplicação em produção aqui](https://indicamais.azurewebsites.net/).
+Acesse a aplicação em produção [aqui](https://indicamais.azurewebsites.net/).
 
 ## Licença
 Este projeto é de propriedade privada e não está disponível para modificação ou distribuição.
