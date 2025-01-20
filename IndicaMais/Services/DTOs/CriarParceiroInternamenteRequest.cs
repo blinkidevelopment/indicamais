@@ -8,5 +8,7 @@
         public int Tipo { get; set; }
         public string Senha { get; set; }
         public string Confirmacao { get; set; }
+        public int? IdIndicador { get; set; }
+        public bool ContratoFechado { get; set; }
     }
 }

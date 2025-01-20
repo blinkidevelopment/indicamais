@@ -58,7 +58,8 @@
                     'Content-Type': 'application/json'
                 }
             }).then((response) => response.json()).then((data) => { resposta = data });
-        } catch {
+        } catch (er) {
+            console.log(er)
             resposta = null;
         }
         return resposta;
@@ -234,7 +235,7 @@
         return response;
     }
 
-    async criarParceiro(nome, celular, cpf, tipo, senha) {
+    async criarParceiro(nome, celular, cpf, tipo, senha, idIndicador, contratoFechado) {
         var resposta;
 
         try {
@@ -249,7 +250,9 @@
                     cpf: cpf,
                     tipo: tipo,
                     senha: senha,
-                    confirmacao: senha
+                    confirmacao: senha,
+                    idIndicador: idIndicador,
+                    contratoFechado: contratoFechado
                 })
             }).then((response) => response.json()).then((data) => { resposta = data });
         } catch {

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import style from './NewPartnerPage.module.scss';
 import Utils from "../classes/Utils";
 import Recursos from "../classes/Recursos";
+import AsyncSelect from "react-select/async";
 
 function NewPartnerPage() {
     const fetch = new Fetch();
@@ -13,8 +14,12 @@ function NewPartnerPage() {
     const recursos = new Recursos();
     const EnviandoIcone = recursos.getEnviando();
 
+    const [debounceTimeout, setDebounceTimeout] = useState(null);
     const [enviado, setEnviado] = useState(null);
+    const [tipoParceiro, setTipoParceiro] = useState("1");
     const [cpf, setCpf] = useState(null);
+    const [idIndicador, setIdIndicador] = useState(null);
+    const [contratoFechado, setContratoFechado] = useState(false);
     const [senha, setSenha] = useState(null);
     const [confirmacao, setConfirmacao] = useState(null);
     const [valCpf, setValCpf] = useState(false);
@@ -59,9 +64,44 @@ function NewPartnerPage() {
     }, [cpf]);
 
     useEffect(() => {
+        if (idIndicador === null) {
+            setContratoFechado(false);
+        }
+    }, [idIndicador])
+
+    useEffect(() => {
         const body = document.querySelector('body');
         body.classList.add(style.bodybg);
     }, []);
+
+    const loadOptions = (input, callback) => {
+        if (debounceTimeout) {
+            clearTimeout(debounceTimeout);
+        }
+        const timeout = setTimeout(async () => {
+            const options = await fetchOptions(input);
+            callback(options);
+        }, 500);
+
+        setDebounceTimeout(timeout);
+    };
+
+    const fetchOptions = async (input) => {
+        if (!input) {
+            return [];
+        }
+
+        try {
+            const resultado = await fetch.buscarParceirosNome(input);
+
+            return resultado.map(item => ({
+                label: item.nome + " - " + (item.cpf ? ("CPF: " + item.cpf) : "[SEM CPF]"),
+                value: item.id
+            }));
+        } catch {
+            return [{ label: 'Erro ao carregar', value: null }];
+        }
+    };
 
     async function enviarSolicitacao() {
         setEnviado(true);
@@ -70,7 +110,7 @@ function NewPartnerPage() {
         var tipo = document.getElementById('tipo').value;
 
         if (nome && celular && valCpf === true && valSenha.confirmacao === true) {
-            var resultado = await fetch.criarParceiro(nome, celular, cpf.replace(/[.\-_]/g, ''), tipo, senha);
+            var resultado = await fetch.criarParceiro(nome, celular, cpf.replace(/[.\-_]/g, ''), tipo, senha, idIndicador, contratoFechado);
 
             if (resultado === true) {
                 alert('Parceiro criado');
@@ -104,11 +144,32 @@ function NewPartnerPage() {
                         : ""}
                 </div>
                 <div className={style.campo}>
-                    <select id="tipo">
+                    <select id="tipo" onChange={(e) => setTipoParceiro(e.target.value)}>
                         <option value="1">Parceiro</option>
                         <option value="0">Indicador</option>
                     </select>
                 </div>
+                {tipoParceiro === "0" ? 
+                    <div className={style.campo}>
+                        <p>Selecione abaixo a pessoa que indicou esse cliente. Deixe em branco caso queira criar um cadastro sem indicação</p>
+                        <AsyncSelect
+                            cacheOptions
+                            isClearable
+                            loadOptions={loadOptions}
+                            onChange={(selectedOption) => setIdIndicador(selectedOption ? selectedOption.value : null)}
+                            placeholder="Digite para pesquisar..."
+                            noOptionsMessage={() => "Nenhum resultado encontrado"}
+                            loadingMessage={() => "Carregando..."}
+                        />
+                        {idIndicador !== null ?
+                            <>
+                                <label htmlFor="contratoFechado">Marcar como contrato fechado</label>
+                                <input type="checkbox" id="contratoFechado" checked={contratoFechado} onChange={(e) => setContratoFechado(e.target.checked)} />
+                                <p className={style.aviso}>Ao selecionar essa opção, o indicador será marcado como contrato fechado e a pessoa que o indicou terá o valor da carteira atualizado</p>
+                            </>
+                        : ""}
+                    </div>
+                : ""}
                 <div className={style.campo}>
                     <input placeholder="Senha" id="senha" type="password" onChange={(e) => setSenha(e.target.value)} />
                     {senha ?

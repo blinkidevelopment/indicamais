@@ -92,6 +92,40 @@ namespace IndicaMais.Services
                         };
 
                         _context.Parceiros.Add(parceiro);
+
+                        if (request.IdIndicador.HasValue)
+                        {
+                            var parceiroIndicador = await _context.Parceiros.FirstOrDefaultAsync(p => p.Id == request.IdIndicador);
+
+                            if (parceiroIndicador != null)
+                            {
+                                var indicacao = new Indicacao
+                                {
+                                    Parceiro = parceiroIndicador,
+                                    Indicado = parceiro
+                                };
+
+                                _context.Indicacoes.Add(indicacao);
+
+                                if (request.ContratoFechado == true)
+                                {
+                                    if (parceiro.Fechou == false)
+                                    {
+                                        var valorInd = await _context.Configuracoes
+                                            .Where(c => c.Chave == "valorInd")
+                                            .Select(c => c.Valor)
+                                            .FirstOrDefaultAsync();
+
+                                        parceiro.Fechou = true;
+                                        parceiro.FechouEm = DateTime.UtcNow;
+
+                                        parceiroIndicador.Credito = parceiroIndicador.Credito + valorInd;
+                                        _context.Parceiros.Update(parceiroIndicador);
+                                    }
+                                }
+                            }
+                        }
+
                         await _context.SaveChangesAsync();
                         return true;
                     }

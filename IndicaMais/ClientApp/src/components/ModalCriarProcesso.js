@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import style from './ModalCriarProcesso.module.scss';
 import Fetch from '../classes/Fetch';
-import Select from 'react-select';
 import AsyncSelect from 'react-select/async';
 
 function ModalCriarProcesso(props) {
@@ -23,7 +22,7 @@ function ModalCriarProcesso(props) {
             const resultado = await fetch.buscarParceirosNome(input);
 
             return resultado.map(item => ({
-                label: item.nome + " - " + item.cpf,
+                label: item.nome + " - " + (item.cpf ? ("CPF: " + item.cpf) : "[SEM CPF]"),
                 value: item.id
             }));
         } catch {
