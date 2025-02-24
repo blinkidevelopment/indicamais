@@ -117,7 +117,7 @@ function ItemPremio({ adicionar, premio, atualizar }) {
                         <p>{premio.nome}</p>
                     </div>
                     <div>
-                        <p>R$ {premio.valor}</p>
+                        <p>{premio.valor} pontos</p>
                     </div>
                     <div className={styles.descricao}>
                         <p><strong>Descrição:</strong> {premio.descricao}</p>
@@ -151,7 +151,7 @@ function ItemPremio({ adicionar, premio, atualizar }) {
                         <input id="nome" placeholder="Nome do prêmio" type="text" defaultValue={premio.nome} />
                     </div>
                     <div>
-                        <input id="valor" placeholder="Valor do prêmio" type="number" defaultValue={premio.valor} />
+                        <input id="valor" placeholder="Valor do prêmio (pontos)" type="number" defaultValue={premio.valor} />
                     </div>
                     <div>
                         <input id="imagem" placeholder="URL da imagem" type="text" defaultValue={premio.imagem} />
