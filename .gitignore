@@ -137,3 +137,5 @@ _NCrunch*
 
 # Migrations folder (Entity Framework)
 Migrations/
+
+node_modules/
